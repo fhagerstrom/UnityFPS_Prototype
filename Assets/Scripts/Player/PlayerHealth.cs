@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerHealth : MonoBehaviour
 {
     private float health;
-    private float lerpTimer;
     public float maxHealth = 100f;
+    private float lerpTimer;
     public float chipSpeed = 2f;
 
     public Image frontHealthBar;
@@ -26,13 +24,12 @@ public class PlayerHealth : MonoBehaviour
     {
         health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealthUI();
-
+        
 
     }
 
     public void UpdateHealthUI()
     {
-        Debug.Log(health);
         float fillFront = frontHealthBar.fillAmount;
         float fillBack = backHealthBar.fillAmount;
         float hFraction = health / maxHealth;
@@ -40,16 +37,35 @@ public class PlayerHealth : MonoBehaviour
         if(fillBack > hFraction)
         {
             frontHealthBar.fillAmount = hFraction;
-            backHealthBar.color = Color.white;
+            backHealthBar.color = Color.red;
             lerpTimer += Time.deltaTime;
             float percentComplete = lerpTimer / chipSpeed;
+            percentComplete = percentComplete * percentComplete; // Animation reasons
             backHealthBar.fillAmount = Mathf.Lerp(fillBack, hFraction, percentComplete);
         }
+
+        if(fillFront < hFraction) 
+        {
+            backHealthBar.color = Color.green;
+            backHealthBar.fillAmount = hFraction;
+            lerpTimer += Time.deltaTime;
+            float percentComplete = lerpTimer / chipSpeed;
+            percentComplete = percentComplete * percentComplete; // Animation reasons
+            frontHealthBar.fillAmount = Mathf.Lerp(fillFront, backHealthBar.fillAmount, percentComplete);
+        }
+
+        healthText.text = health.ToString();
     }
 
     public void TakeDamage(float damage)
     {
         health -= damage;
+        lerpTimer = 0f;
+    }
+
+    public void RestoreHealth(float healAmount)
+    {
+        health += healAmount;
         lerpTimer = 0f;
     }
 }

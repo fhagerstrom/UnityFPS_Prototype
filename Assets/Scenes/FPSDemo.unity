@@ -1055,7 +1055,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnInteract:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3431867382343325870}
+        m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 20
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &750401571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,7 +1081,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useEvents: 1
-  promptMsg: 'E: Take Damage'
+  promptMsg: Take Damage
 --- !u!1 &1079073856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,7 +1308,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnInteract:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3431867382343325870}
+        m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
+        m_MethodName: RestoreHealth
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 20
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1132548112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2173,6 +2197,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4758030904200496204, guid: 95ea5636d7f12f34c920e9ee750d74fb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3431867382343325869}
+    - targetCorrespondingSourceObject: {fileID: 4758030904200496204, guid: 95ea5636d7f12f34c920e9ee750d74fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3431867382343325870}
   m_SourcePrefab: {fileID: 100100000, guid: 95ea5636d7f12f34c920e9ee750d74fb, type: 3}
 --- !u!1 &3431867382343325852 stripped
 GameObject:
@@ -2192,6 +2219,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   promptText: {fileID: 120381852}
+--- !u!114 &3431867382343325870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431867382343325852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22ba218512da1f848837fb9dcedcc65f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  chipSpeed: 2
+  frontHealthBar: {fileID: 1740586763}
+  backHealthBar: {fileID: 6080905}
+  healthText: {fileID: 297994366}
 --- !u!1001 &6433213490064089294
 PrefabInstance:
   m_ObjectHideFlags: 0
