@@ -18,7 +18,6 @@ public abstract class Interactable : MonoBehaviour
         {
             GetComponent<InteractionEvent>().OnInteract.Invoke();
         }
-
         Interact();
     }
 

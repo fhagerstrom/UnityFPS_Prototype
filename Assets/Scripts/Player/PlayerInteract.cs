@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         cam = GetComponent<PlayerLook>().cam;
-        playerUI= GetComponent<PlayerUI>();
+        playerUI = GetComponent<PlayerUI>();
         inputManager = GetComponent<InputManager>();
     }
 
