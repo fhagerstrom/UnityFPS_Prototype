@@ -16,6 +16,11 @@ public class PatrolState : BaseState
     public override void Perform()
     {
         Patrolling();
+
+        if(enemy.PlayerInSight())
+        {
+            stateMachine.ChangeState(new AttackState());
+        }
     }
 
     public override void Exit() 
