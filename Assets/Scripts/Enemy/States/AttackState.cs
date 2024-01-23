@@ -7,7 +7,7 @@ public class AttackState : BaseState
     private float moveTimer;
     private float losePlayerTimer;
     private float shotTimer;
-    public float bulletVelocity = 40f;
+    public float bulletVelocity = 50f;
 
     public override void Enter()
     {
@@ -55,6 +55,15 @@ public class AttackState : BaseState
 
     public void Shoot()
     {
+        // Indecisive if shooting should be hitscan (raycast) or projectile-based.  
+
+        // *HITSCAN*
+
+
+
+
+        // *PROJECTILE-BASED*
+
         // Store ref to gun barrel
         Transform gunBarrel = enemy.gunBarrel;
         // Spawn new bullet
@@ -62,7 +71,7 @@ public class AttackState : BaseState
         // Calc direction to player
         Vector3 shootDirection = (enemy.Player.transform.position - gunBarrel.transform.position).normalized;
         // Add force to rigidbody component.
-        // Random is used to add "spread" / inaccuracy to the shooting, times
+        // Random is used to add "spread" / inaccuracy to the shooting
         bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-3f, 3f), Vector3.up) * shootDirection * bulletVelocity;
 
         Debug.Log("AI Shooting!");
