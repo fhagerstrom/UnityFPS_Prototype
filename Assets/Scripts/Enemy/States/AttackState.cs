@@ -7,7 +7,11 @@ public class AttackState : BaseState
     private float moveTimer;
     private float losePlayerTimer;
     private float shotTimer;
+    private float returnBulletTimer;
     public float bulletVelocity = 50f;
+
+    public GameObject bulletPrefab;
+    private GameObject bullet;
 
     public override void Enter()
     {
@@ -39,6 +43,17 @@ public class AttackState : BaseState
                 enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
                 moveTimer = 0;
             }
+
+            // Check the returnBulletTimer
+            if (returnBulletTimer > 0)
+            {
+                returnBulletTimer -= Time.deltaTime;
+
+                if (returnBulletTimer <= 0)
+                {
+                    ReturnBulletToPool();
+                }
+            }
         }
 
         else
@@ -55,19 +70,17 @@ public class AttackState : BaseState
 
     public void Shoot()
     {
-        // Indecisive if shooting should be hitscan (raycast) or projectile-based.  
+        // Get bullet from object pool
+        bullet = ObjectPoolManager.instance.GetBullet();
 
-        // *HITSCAN*
-
-
-
-
-        // *PROJECTILE-BASED*
+        // *PROJECTILE-BASED SHOOTING*
 
         // Store ref to gun barrel
         Transform gunBarrel = enemy.gunBarrel;
-        // Spawn new bullet
-        GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/Bullet") as GameObject, gunBarrel.position, enemy.transform.rotation);
+
+        bullet.transform.position = gunBarrel.position;
+        bullet.transform.rotation = gunBarrel.rotation;
+
         // Calc direction to player
         Vector3 shootDirection = (enemy.Player.transform.position - gunBarrel.transform.position).normalized;
         // Add force to rigidbody component.
@@ -75,7 +88,16 @@ public class AttackState : BaseState
         bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-3f, 3f), Vector3.up) * shootDirection * bulletVelocity;
 
         Debug.Log("AI Shooting!");
+
         shotTimer = 0;
+        returnBulletTimer = 1.0f;
+
+    }
+
+    private void ReturnBulletToPool()
+    {
+        // Return the bullet to the object pool
+        bullet.GetComponent<Bullet>().ReturnToPool();
     }
 
     // Start is called before the first frame update

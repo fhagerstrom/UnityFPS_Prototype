@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private void Awake()
-    {
-        Destroy(gameObject, 3f);
-    }
-
-
     private void OnCollisionEnter(Collision collision)
     {
         Transform hitTransform = collision.transform;
@@ -17,8 +11,15 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("Hit Player!");
             hitTransform.GetComponent<PlayerHealth>().TakeDamage(15);
-            Destroy(gameObject);
         }
 
+        // Regardless of collision type, return bullet to object pool
+        ReturnToPool();
+    }
+
+    public void ReturnToPool()
+    {
+        // Deactivate bullet and return to object pool
+        gameObject.SetActive(false);
     }
 }

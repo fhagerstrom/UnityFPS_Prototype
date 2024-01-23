@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ObjectPoolManager : MonoBehaviour
+{
+    public static ObjectPoolManager instance;
+
+    public GameObject bulletPrefab;
+    public int poolSize = 10;
+
+    private List<GameObject> bulletPool;
+
+    // Awake is called before the first frame update
+    void Awake()
+    {
+        // Singleton check
+        if (instance == null)
+        {
+            instance = this;
+            InitializePool(); // Initialize the object pool
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicates
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void InitializePool()
+    {
+        bulletPool = new List<GameObject>();
+
+        for(int i = 0; i < poolSize; i++)
+        {
+            GameObject bullet = Instantiate(bulletPrefab);
+            bullet.SetActive(false);
+            bulletPool.Add(bullet);
+        }
+
+    }
+
+    public GameObject GetBullet()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            bullet.SetActive(true);
+            return bullet;
+        }
+
+        // If no inactive bullets found, create new ones
+        GameObject newBullet = Instantiate(bulletPrefab);
+        bulletPool.Add(newBullet);
+        return newBullet;
+    }
+
+}
