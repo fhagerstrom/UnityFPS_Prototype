@@ -10,18 +10,23 @@ public class InputManager : MonoBehaviour
 
     private PlayerMotor motor;
     private PlayerLook look;
+    private PlayerWeapon weapon;
 
     // Start is called before the first frame update
     void Awake()
     {
+        // Inputs
         playerInput = new PlayerInput();
         onFoot = playerInput.OnFoot;
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
+        weapon = GetComponent<PlayerWeapon>();
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Jump.performed += ctx => motor.Jump();
+        onFoot.Fire.performed += ctx => Shoot();
+        onFoot.SwitchWeapon.performed += ctx => SwitchWeapon();
     }
 
     // Update is called once per frame
@@ -44,6 +49,34 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         onFoot.Disable();
+    }
+
+    // Handle shooting
+    private void Shoot()
+    {
+        /* DEBUGGING
+
+        if (weapon == null)
+        {
+            Debug.LogError("PlayerWeapon is null!");
+            return;
+        }
+
+        if (weapon.currentWeapon == null)
+        {
+            Debug.LogError("CurrentWeapon is null!");
+            return;
+        }
+
+        */
+
+        // Call the Shoot method of the current weapon
+        weapon.currentWeapon.Shoot();
+    }
+
+    private void SwitchWeapon()
+    {
+        // TODO: Add logic when more weapons are added.
     }
 
 }

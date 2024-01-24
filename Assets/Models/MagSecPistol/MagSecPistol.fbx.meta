@@ -1,49 +1,9 @@
 fileFormatVersion: 2
-guid: 53e97b337bb1c3a449943731f190e3d7
+guid: d2f6487a996479d4698273eaaf2f8de5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mArm
-    second: {fileID: 2100000, guid: 3897ca4ccfccc474d81fcc7721e0a80c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mBody
-    second: {fileID: 2100000, guid: 88926d8dbad1cfa43abc766f905b8242, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mHand
-    second: {fileID: 2100000, guid: 5ca3eacb0b86cc04a991a10595161218, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mHead
-    second: {fileID: 2100000, guid: 5c15421f9c25ca141b7d7f3dcde3d53f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mHelmet
-    second: {fileID: 2100000, guid: 53de10fc6f20c314fbf82fcfb0d325d8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mHelmetVisor
-    second: {fileID: 2100000, guid: ca9072bbb86f12d4d9fa305af9c3a11d, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mHip
-    second: {fileID: 2100000, guid: b379c08ada481b94c9f6f743635cc8f1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mLeg
-    second: {fileID: 2100000, guid: 846ac8d4a4016074196ac578ebea05ad, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
