@@ -3,8 +3,9 @@ using UnityEngine.Events;
 
 public interface IWeapon
 {
-    UnityEvent OnShoot { get; set; }
-    UnityEvent OnReload { get; set; }
+    UnityEvent OnShoot { get; }
+    UnityEvent OnReload { get; }
+    UnityEvent<float> OnEnemyHit { get; }
     void Shoot();
     void Reload();
 }

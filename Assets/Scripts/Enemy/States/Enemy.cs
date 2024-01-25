@@ -20,11 +20,16 @@ public class Enemy : MonoBehaviour
     [Header("Weapon values")]
     public Transform gunBarrel;
     public float fireRate;
-    [Range(0.1f, 10f)]
+
+    [Header("Health values")]
+    private float health;
+    public float maxHealth = 100f;
 
     // Debugging
     [SerializeField]
     private string currentState;
+    [SerializeField]
+    private string currentHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +38,8 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initíalize();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -40,6 +47,8 @@ public class Enemy : MonoBehaviour
     {
         PlayerInSight();
         currentState = stateMachine.activeState.ToString();
+        health = Mathf.Clamp(health, 0, maxHealth);
+        currentHealth = health.ToString();
     }
 
     public bool PlayerInSight()
@@ -70,5 +79,17 @@ public class Enemy : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+
+        if(health <= 0)
+        {
+            Debug.Log("Enemy should be dead.");
+            // Death animations and logic here.
+
+        }
     }
 }

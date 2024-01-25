@@ -54,29 +54,13 @@ public class InputManager : MonoBehaviour
     // Handle shooting
     private void Shoot()
     {
-        /* DEBUGGING
-
-        if (weapon == null)
-        {
-            Debug.LogError("PlayerWeapon is null!");
-            return;
-        }
-
-        if (weapon.currentWeapon == null)
-        {
-            Debug.LogError("CurrentWeapon is null!");
-            return;
-        }
-
-        */
-
         // Call the Shoot method of the current weapon
         weapon.currentWeapon.Shoot();
     }
 
     private void SwitchWeapon()
     {
-        // TODO: Add logic when more weapons are added.
+        // TODO: Add logic when more weapons are added
     }
 
 }
