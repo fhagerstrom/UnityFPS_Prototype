@@ -134,17 +134,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
 
     public void Reload()
     {
-        // Specific weapon logic here, ammo reset, reload animation etc.
-        if (!isReloading && currentAmmo > 0)
-        {
-            Debug.Log("Reloading pistol!");
-            OnReload.Invoke();
-            isReloading = true;
-            reloadTimeRemaining = reloadTimer;
-            currentMagCapacity = maxMagCapacity;
-        }
-
-        else if(!isReloading && currentMagCapacity < maxMagCapacity && currentAmmo > 0) 
+        if(!isReloading && currentMagCapacity < maxMagCapacity && currentAmmo > 0) 
         {
             OnReload.Invoke();
             isReloading = true;
