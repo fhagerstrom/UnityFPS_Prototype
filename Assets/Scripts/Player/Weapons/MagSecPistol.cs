@@ -13,12 +13,24 @@ public class MagSecPistol : MonoBehaviour, IWeapon
     [SerializeField]
     private UnityEvent<float> onEnemyHit = new UnityEvent<float>();
 
-    public float fireCooldown; // Set in inspector
+    [Header("Weapon Properties")]
+    [SerializeField]
+    private float raycastRange = 50f;
+    public float fireCooldown;
     private float currentCooldown;
+    public int maxMagCapacity = 9;
+    [SerializeField]
+    private int currentMagCapacity;
+    public int maxAmmo = 81;
+    [SerializeField]
+    private int currentAmmo;
+    public float damage = 20f;
+    [SerializeField]
+    private float reloadTimer = 2.2f;
+    private bool isReloading = false;
+    private float reloadTimeRemaining = 0f;
 
-    public float rayCastRange = 100f;
-
-    // Use player camera
+    // Use player camera for the raycasting
     public Camera playerCam;
 
     public UnityEvent OnShoot
@@ -39,56 +51,110 @@ public class MagSecPistol : MonoBehaviour, IWeapon
     // Start is called before the first frame update
     void Start()
     {
-
+        currentMagCapacity = maxMagCapacity;
+        maxMagCapacity = Mathf.Clamp(currentMagCapacity, 0, maxMagCapacity);
+        CalcAmmoLeft();
     }
 
     // Update is called once per frame
     void Update()
     {
         // Debug.DrawRay to visualize the expected ray in the Scene view
-        Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward * rayCastRange, Color.blue);
+        Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward * raycastRange, Color.blue);
 
         currentCooldown -= Time.deltaTime;
+
+        if(isReloading)
+        {
+            HandleReloadTimer();
+        }
+
+    }
+
+    private void CalcAmmoLeft()
+    {
+        currentAmmo = maxAmmo - (maxMagCapacity - currentMagCapacity);
     }
 
     public void Shoot()
     {
-        if (currentCooldown <= 0f)
+        if (!isReloading && currentCooldown <= 0f)
         {
-            Debug.Log("Firing pistol!");
-
-            RaycastHit hitInfo;
-            bool raycastHit = Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hitInfo, rayCastRange);
-
-            if (raycastHit)
+            if (currentMagCapacity > 0)
             {
-                Enemy enemy = hitInfo.collider.GetComponent<Enemy>();
-                if (enemy != null)
+
+
+                Debug.Log("Firing pistol!");
+
+                RaycastHit hitInfo;
+                bool raycastHit = Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hitInfo, raycastRange);
+
+                if (raycastHit)
                 {
-                    Debug.Log("Hit enemy!");
-                    // Invoke the damage event
-                    OnEnemyHit.Invoke(20); // Adjust the damage value as needed
+                    Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+
+                    if (enemy != null)
+                    {
+                        Debug.Log("Hit enemy!");
+                        // Invoke the damage event
+                        OnEnemyHit.Invoke(damage); // Adjust the damage value as needed
+                    }
+
+                    // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
+
                 }
 
-                Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, rayCastRange);
-            }
-            else
-            {
-                Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.red, rayCastRange);
-            }
+                // Specific weapon logic here, ammo count etc.
+                OnShoot.Invoke();
+                currentCooldown = fireCooldown;
+                currentMagCapacity--;
+                CalcAmmoLeft();
 
-            OnShoot.Invoke();
-            currentCooldown = fireCooldown;
+            }
+        }
 
-            // Specific weapon logic here, ammo count etc.
+        if (currentMagCapacity == 0)
+        {
+            Reload();
+        }
+    }
+
+    private void HandleReloadTimer()
+    {
+        reloadTimeRemaining -= Time.deltaTime;
+        if (reloadTimeRemaining <= 0f)
+        {
+            // Reload complete
+            isReloading = false;
+            currentMagCapacity = Mathf.Clamp(currentMagCapacity, 0, maxMagCapacity);
+            CalcAmmoLeft();
+            Debug.Log("Reload Complete! Current Ammo left: " + currentAmmo);
         }
     }
 
     public void Reload()
     {
         // Specific weapon logic here, ammo reset, reload animation etc.
-        Debug.Log("Reloading pistol!");
+        if (!isReloading && currentAmmo > 0)
+        {
+            Debug.Log("Reloading pistol!");
+            OnReload.Invoke();
+            isReloading = true;
+            reloadTimeRemaining = reloadTimer;
+            currentMagCapacity = maxMagCapacity;
+        }
 
-        OnReload.Invoke();
+        else if(!isReloading && currentMagCapacity < maxMagCapacity && currentAmmo > 0) 
+        {
+            OnReload.Invoke();
+            isReloading = true;
+            reloadTimeRemaining = reloadTimer;
+            currentMagCapacity = maxMagCapacity;
+        }
+
+        if(currentAmmo <= 0)
+        {
+            Debug.Log("No ammo left! Can't reload.");
+        }
     }
 }

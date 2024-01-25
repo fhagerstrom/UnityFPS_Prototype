@@ -26,6 +26,7 @@ public class InputManager : MonoBehaviour
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Fire.performed += ctx => Shoot();
+        onFoot.Reload.performed += ctx => Reload();
         onFoot.SwitchWeapon.performed += ctx => SwitchWeapon();
     }
 
@@ -56,6 +57,11 @@ public class InputManager : MonoBehaviour
     {
         // Call the Shoot method of the current weapon
         weapon.currentWeapon.Shoot();
+    }
+
+    private void Reload()
+    {
+        weapon.currentWeapon.Reload();
     }
 
     private void SwitchWeapon()
