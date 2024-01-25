@@ -1121,19 +1121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onShoot:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onReload:
     m_PersistentCalls:
       m_Calls: []
@@ -2798,6 +2786,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   magSecPistol: {fileID: 681682595}
+  shootSound: {fileID: 8300000, guid: 3b052d3b33bbd9c47b6491681c67772b, type: 3}
+  shootVolume: 0.2
 --- !u!1001 &4497186205259567241
 PrefabInstance:
   m_ObjectHideFlags: 0

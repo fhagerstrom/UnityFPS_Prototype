@@ -52,6 +52,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
     void Start()
     {
         currentMagCapacity = maxMagCapacity;
+        currentAmmo = maxAmmo;
         maxMagCapacity = Mathf.Clamp(currentMagCapacity, 0, maxMagCapacity);
         CalcAmmoLeft();
     }
@@ -73,7 +74,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
 
     private void CalcAmmoLeft()
     {
-        currentAmmo = maxAmmo - (maxMagCapacity - currentMagCapacity);
+        currentAmmo -= (maxMagCapacity - currentMagCapacity);
     }
 
     public void Shoot()
@@ -97,7 +98,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
                     {
                         Debug.Log("Hit enemy!");
                         // Invoke the damage event
-                        OnEnemyHit.Invoke(damage); // Adjust the damage value as needed
+                        OnEnemyHit.Invoke(damage);
                     }
 
                     // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
@@ -108,8 +109,6 @@ public class MagSecPistol : MonoBehaviour, IWeapon
                 OnShoot.Invoke();
                 currentCooldown = fireCooldown;
                 currentMagCapacity--;
-                CalcAmmoLeft();
-
             }
         }
 
@@ -126,8 +125,6 @@ public class MagSecPistol : MonoBehaviour, IWeapon
         {
             // Reload complete
             isReloading = false;
-            currentMagCapacity = Mathf.Clamp(currentMagCapacity, 0, maxMagCapacity);
-            CalcAmmoLeft();
             Debug.Log("Reload Complete! Current Ammo left: " + currentAmmo);
         }
     }
@@ -139,6 +136,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
             OnReload.Invoke();
             isReloading = true;
             reloadTimeRemaining = reloadTimer;
+            currentAmmo -= (maxMagCapacity - currentMagCapacity); // Deduct total ammo left
             currentMagCapacity = maxMagCapacity;
         }
 
