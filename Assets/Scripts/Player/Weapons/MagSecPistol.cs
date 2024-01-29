@@ -16,14 +16,12 @@ public class MagSecPistol : MonoBehaviour, IWeapon
     [Header("Weapon Properties")]
     [SerializeField]
     private float raycastRange = 50f;
-    public float fireCooldown;
-    private float currentCooldown;
+    public float fireRate = 0.3f;
+    private float cooldown;
     public int maxMagCapacity = 9;
-    [SerializeField]
-    private int currentMagCapacity;
+    public int currentMagCapacity;
     public int maxAmmo = 81;
-    [SerializeField]
-    private int currentAmmo;
+    public int currentAmmo;
     public float damage = 20f;
     [SerializeField]
     private float reloadTimer = 2.2f;
@@ -48,6 +46,11 @@ public class MagSecPistol : MonoBehaviour, IWeapon
         get { return onEnemyHit; }
     }
 
+    public GameObject GetWeaponObject()
+    {
+        return gameObject;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +66,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
         // Debug.DrawRay to visualize the expected ray in the Scene view
         Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward * raycastRange, Color.blue);
 
-        currentCooldown -= Time.deltaTime;
+        cooldown -= Time.deltaTime;
 
         if(isReloading)
         {
@@ -79,7 +82,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
 
     public void Shoot()
     {
-        if (!isReloading && currentCooldown <= 0f)
+        if (!isReloading && cooldown <= 0f)
         {
             if (currentMagCapacity > 0)
             {
@@ -107,8 +110,9 @@ public class MagSecPistol : MonoBehaviour, IWeapon
 
                 // Specific weapon logic here, ammo count etc.
                 OnShoot.Invoke();
-                currentCooldown = fireCooldown;
+                cooldown = fireRate;
                 currentMagCapacity--;
+                Debug.Log("Current mag cap: " + currentMagCapacity);
             }
         }
 
@@ -136,7 +140,7 @@ public class MagSecPistol : MonoBehaviour, IWeapon
             OnReload.Invoke();
             isReloading = true;
             reloadTimeRemaining = reloadTimer;
-            currentAmmo -= (maxMagCapacity - currentMagCapacity); // Deduct total ammo left
+            CalcAmmoLeft(); // Deduct total ammo left
             currentMagCapacity = maxMagCapacity;
         }
 

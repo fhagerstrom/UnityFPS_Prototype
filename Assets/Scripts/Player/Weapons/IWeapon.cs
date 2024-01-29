@@ -8,4 +8,6 @@ public interface IWeapon
     UnityEvent<float> OnEnemyHit { get; }
     void Shoot();
     void Reload();
+    GameObject GetWeaponObject();
+
 }

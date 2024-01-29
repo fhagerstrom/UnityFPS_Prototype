@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.Events;
 public class PlayerWeapon : MonoBehaviour
 {
-    [SerializeField]
     public IWeapon currentWeapon;
 
     [SerializeField]
-    private GameObject magSecPistol;
+    private MagSecPistol magSecPistolMesh;
+
+    [SerializeField]
+    private PdShotgun pdShotgunMesh;
 
     [SerializeField]
     private AudioClip shootSound;
@@ -15,7 +17,7 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)]
     private float shootVolume = 1.0f;
 
-    public void EquipWeapon(IWeapon weapon)
+    public void EquipWeapon(GameObject weapon)
     {
         // Remove UnityEvents listener from previous weapon
         if(currentWeapon != null)
@@ -25,16 +27,21 @@ public class PlayerWeapon : MonoBehaviour
             currentWeapon.OnEnemyHit.RemoveListener(OnEnemyHitHandler);
         }
 
-        // Set new weapon
-        currentWeapon = weapon;
-        Debug.Log("Equipped weapon: " + currentWeapon);
+        // Instantiate "new" weapon
+        GameObject newWeapon = Instantiate(weapon);
+        currentWeapon = newWeapon.GetComponent<IWeapon>();
 
         if (currentWeapon != null)
         {
             currentWeapon.OnShoot.AddListener(OnShootHandler);
             currentWeapon.OnReload.AddListener(OnReloadHandler);
             currentWeapon.OnEnemyHit.AddListener(OnEnemyHitHandler);
+
+            Debug.Log("Equipped weapon: " + currentWeapon.GetType().Name);
         }
+
+        else
+            Debug.LogError("Failed to equip weapon. Check if gameobject make use of IWeapon");
     }
 
     private void OnShootHandler()
@@ -65,15 +72,15 @@ public class PlayerWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Start with MagSec pistol
-        EquipWeapon(magSecPistol.GetComponent<IWeapon>());
-
         // Initialize AudioSource
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+
+        // Instantiate and equip the initial weapon (e.g., MagSecPistol)
+        EquipWeapon(magSecPistolMesh.gameObject);
     }
 
     // Update is called once per frame

@@ -153,7 +153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2f6487a996479d4698273eaaf2f8de5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.82316303
+      value: 0.957
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d2f6487a996479d4698273eaaf2f8de5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1141,7 +1141,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   raycastRange: 50
-  fireCooldown: 0
+  fireRate: 0.3
   maxMagCapacity: 9
   currentMagCapacity: 0
   maxAmmo: 81
@@ -2785,7 +2785,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5508b944a34fc6448a0c9b5927589f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magSecPistol: {fileID: 681682595}
+  magSecPistolMesh: {fileID: 681682597}
+  pdShotgunMesh: {fileID: 0}
   shootSound: {fileID: 8300000, guid: 3b052d3b33bbd9c47b6491681c67772b, type: 3}
   shootVolume: 0.2
 --- !u!1001 &4497186205259567241
