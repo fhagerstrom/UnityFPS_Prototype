@@ -7,10 +7,10 @@ public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
-
+ 
     private PlayerMotor motor;
     private PlayerLook look;
-    private PlayerWeapon weapon;
+    private PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
-        weapon = GetComponent<PlayerWeapon>();
+        playerManager = GetComponent<PlayerManager>();
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
         onFoot.Jump.performed += ctx => motor.Jump();
@@ -56,12 +56,12 @@ public class InputManager : MonoBehaviour
     private void Shoot()
     {
         // Call the Shoot method of the current weapon
-        weapon.currentWeapon.Shoot();
+        playerManager.equippedWeapon.GetComponent<BaseWeapon>().Shoot();
     }
 
     private void Reload()
     {
-        weapon.currentWeapon.Reload();
+        playerManager.equippedWeapon.GetComponent<BaseWeapon>().isReloading = true;
     }
 
     private void SwitchWeapon()
