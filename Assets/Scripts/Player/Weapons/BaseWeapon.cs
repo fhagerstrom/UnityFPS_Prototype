@@ -10,7 +10,7 @@ public class BaseWeapon : MonoBehaviour
     public float fireRate;
 
     protected int maxBullets = 9;
-    protected int currentBulletsLeft = 9;
+    protected int bulletsLeft = 9;
     public int maxReserveAmmo = 81;
     public int currentReserveAmmo = 81;
     public float damage = 20f;
@@ -32,12 +32,13 @@ public class BaseWeapon : MonoBehaviour
 
     private void Start()
     {
-        
+        bulletsLeft = maxBullets;
+        currentReserveAmmo = maxReserveAmmo;
     }
 
     public virtual void Update()
     {
-        Reload();
+        // Reload();
     }
 
     public void OnShoot()
@@ -61,7 +62,7 @@ public class BaseWeapon : MonoBehaviour
     {
         Debug.Log("Firing weapon!");
 
-        if (currentBulletsLeft > 0)
+        if (bulletsLeft > 0)
         {
             // Testing random inaccuracy
             Vector3 shotDirection = playerCam.transform.forward;
@@ -85,13 +86,17 @@ public class BaseWeapon : MonoBehaviour
 
             }
 
-            currentBulletsLeft--;
+            bulletsLeft--;
             fireRateCooldown = 0;
-            Debug.Log(currentBulletsLeft);
+            Debug.Log(bulletsLeft);
         }
 
+        // If we have no more bullets in current magazine
         else
-            Debug.Log("YOU NEED MORE BOULETS!");
+        {
+            OnReload();
+            Debug.Log("YOU NEED MORE BOULETS! INVOKING RELOAD");
+        }
     }
 
     public virtual void Reload()
@@ -105,7 +110,7 @@ public class BaseWeapon : MonoBehaviour
         Debug.Log("RELOADINGNGNGNGNG");
 
         // Auto reload if empty
-        if (currentBulletsLeft <= 0)
+        if (bulletsLeft <= 0)
         {
             isReloading = true;
         }
@@ -121,11 +126,11 @@ public class BaseWeapon : MonoBehaviour
                 // Check for ammo capacity
                 if (currentReserveAmmo < maxBullets)
                 {
-                    currentBulletsLeft = currentReserveAmmo;
+                    bulletsLeft = currentReserveAmmo;
                 }
 
-                currentBulletsLeft = maxBullets;
-                Debug.Log("Reload Update, bullets: " + currentBulletsLeft);
+                bulletsLeft = maxBullets;
+                Debug.Log("Reload Update, bullets: " + bulletsLeft);
 
                 // Reset reload variables
                 reloadTimeRemaining = 0;

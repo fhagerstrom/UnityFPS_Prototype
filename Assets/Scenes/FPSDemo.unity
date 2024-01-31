@@ -1127,7 +1127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ce5e3ad7a6dee4da23e70c59c7cb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponEvents: {fileID: 0}
   raycastRange: 50
   fireRate: 0.3
   maxReserveAmmo: 81
@@ -2117,7 +2116,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd35f347dfdfc2a4daffd392b49318da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponEvents: {fileID: 0}
   raycastRange: 20
   fireRate: 1
   maxReserveAmmo: 18
