@@ -2,18 +2,19 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MagSecPistol : BaseWeapon, IWeapon
+public class MagSecPistol : BaseWeapon
 {
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-
+        Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward * raycastRange, Color.blue);
+        base.Update();
     }
 
     public override void Shoot()
@@ -24,6 +25,7 @@ public class MagSecPistol : BaseWeapon, IWeapon
 
     public override void Reload()
     {
+        Debug.Log("RELOAD PISTOL");
         base.Reload();
     }
 }

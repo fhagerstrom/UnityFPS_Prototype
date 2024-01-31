@@ -1,28 +1,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-
 // Base class weapon, holds all base info on bullets, sounds and reload logic
-public class BaseWeapon : MonoBehaviour, IWeapon
+public class BaseWeapon : MonoBehaviour
 {
-    public IWeapon currentWeapon;
-
-    [SerializeField]
-    protected UnityEvent onShoot = new UnityEvent();
-
-    [SerializeField]
-    protected UnityEvent onReload = new UnityEvent();
-
-    [SerializeField]
-    protected UnityEvent<float> onEnemyHit = new UnityEvent<float>();
-
-    [SerializeField]
-    protected AudioClip shootSound;
-    protected AudioSource audioSource;
-
-    [SerializeField, Range(0.0f, 1.0f)]
-    protected float shootVolume = 0.1f;
-
     [Header("Weapon Properties")]
     [SerializeField]
     protected float raycastRange = 50f;
@@ -43,125 +24,113 @@ public class BaseWeapon : MonoBehaviour, IWeapon
     protected float inaccuracyAngle;
 
     public Camera playerCam;
-    protected bool isReloading = false;
+    public bool isReloading = false;
 
     protected float fireRateCooldown = 0f;
-    // End base values
 
-    // Start is called before the first frame update
-    void Start()
+    private Enemy enemy;
+
+    private void Start()
     {
-        // Initialize AudioSource
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
-
-        // Ensure player camera is assigned
-        if (playerCam == null)
-        {
-            Debug.LogError("Player camera not assigned to BaseWeapon.");
-            return;
-        }
-
+        
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
-        Shoot();
         Reload();
-        fireRateCooldown += Time.deltaTime;
     }
+
+    public void OnShoot()
+    {
+        GetComponent<WeaponEvents>().OnShoot.Invoke();
+        Shoot();
+    }
+
+    public void OnReload()
+    {
+        GetComponent<WeaponEvents>().OnReload.Invoke();
+        Reload();
+    }
+
+    public void OnEnemyHit(float damage)
+    {
+        GetComponent<WeaponEvents>().OnEnemyHit.Invoke(damage);
+    }
+
     public virtual void Shoot()
     {
-        // Automatic reload at 0 bullets
-        if (currentBulletsLeft == 0 || isReloading)
-            return;
-
-        if(fireRateCooldown <= fireRate)
-        {
-            return;
-        }
-
         Debug.Log("Firing weapon!");
 
-        // Testing random inaccuracy
-        Vector3 shotDirection = playerCam.transform.forward;
-        shotDirection = Quaternion.Euler(Random.Range(-inaccuracyAngle, inaccuracyAngle), Random.Range(-inaccuracyAngle, inaccuracyAngle), 0) * shotDirection;
-
-        RaycastHit hitInfo;
-        bool raycastHit = Physics.Raycast(playerCam.transform.position, playerCam.transform.forward, out hitInfo, raycastRange);
-
-        if (raycastHit)
+        if (currentBulletsLeft > 0)
         {
-            Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+            // Testing random inaccuracy
+            Vector3 shotDirection = playerCam.transform.forward;
+            shotDirection = Quaternion.Euler(Random.Range(-inaccuracyAngle, inaccuracyAngle), Random.Range(-inaccuracyAngle, inaccuracyAngle), 0) * shotDirection;
 
-            if (enemy != null)
+            RaycastHit hitInfo;
+            bool raycastHit = Physics.Raycast(playerCam.transform.position, shotDirection, out hitInfo, raycastRange);
+
+            if (raycastHit)
             {
-                Debug.Log("Hit enemy!");
-                // Invoke the damage event
-                OnEnemyHit.Invoke(damage);
+                enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+
+                if (enemy != null)
+                {
+                    Debug.Log("Hit enemy!");
+                    // Apply damage
+                    OnEnemyHit(damage);
+                }
+
+                // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
+
             }
 
-            // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
-
+            currentBulletsLeft--;
+            fireRateCooldown = 0;
+            Debug.Log(currentBulletsLeft);
         }
 
-        // Specific weapon logic here, ammo count etc.
-        OnShoot.Invoke();
-        currentBulletsLeft--;
-        fireRateCooldown = 0;
-        Debug.Log(currentBulletsLeft);
+        else
+            Debug.Log("YOU NEED MORE BOULETS!");
     }
 
     public virtual void Reload()
     {
         // Check if conditions allow for reloading
-        if (currentReserveAmmo > 0 && !isReloading)
+        if (!isReloading || currentReserveAmmo <= 0)
         {
-            // Auto reload if empty
-            if (currentBulletsLeft <= 0)
-                isReloading = true;
+            return;
+        }
 
-            // If reloading, wait for reload timer to finish
-            if (isReloading)
+        Debug.Log("RELOADINGNGNGNGNG");
+
+        // Auto reload if empty
+        if (currentBulletsLeft <= 0)
+        {
+            isReloading = true;
+        }
+
+        // If reloading, wait for reload timer to finish
+        if (isReloading)
+        {
+            reloadTimeRemaining += Time.deltaTime;
+
+            // If reload timer is complete, update values and end reload
+            if (reloadTimeRemaining >= reloadTimer)
             {
-                reloadTimeRemaining += Time.deltaTime;
-
-                // If reload timer is complete, update values and end reload
-                if (reloadTimeRemaining >= reloadTimer)
+                // Check for ammo capacity
+                if (currentReserveAmmo < maxBullets)
                 {
-                    // Check for ammo capacity
-                    if (currentReserveAmmo < maxBullets)
-                    {
-                        currentBulletsLeft = currentReserveAmmo;
-                    }
-
-                    currentBulletsLeft = maxBullets;
-                    Debug.Log("Reload Update, bullets: " + currentBulletsLeft);
-
-                    // Reset reload variables
-                    reloadTimeRemaining = 0;
-                    isReloading = false;
+                    currentBulletsLeft = currentReserveAmmo;
                 }
+
+                currentBulletsLeft = maxBullets;
+                Debug.Log("Reload Update, bullets: " + currentBulletsLeft);
+
+                // Reset reload variables
+                reloadTimeRemaining = 0;
+                isReloading = false;
             }
         }
-    }
-
-    public UnityEvent OnShoot
-    {
-        get { return onShoot; }
-    }
-
-    public UnityEvent OnReload
-    {
-        get { return onReload; }
-    }
-
-    public UnityEvent<float> OnEnemyHit
-    {
-        get { return onEnemyHit; }
     }
 }

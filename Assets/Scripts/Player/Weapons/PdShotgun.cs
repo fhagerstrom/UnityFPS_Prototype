@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PdShotgun : BaseWeapon, IWeapon
+public class PdShotgun : BaseWeapon
 {
 
     // Start is called before the first frame update
@@ -14,9 +14,9 @@ public class PdShotgun : BaseWeapon, IWeapon
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
- 
+        base.Update();
     }
 
     public override void Shoot()

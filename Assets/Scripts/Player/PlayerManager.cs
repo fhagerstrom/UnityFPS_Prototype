@@ -5,84 +5,36 @@ using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {
-    public IWeapon currentWeaponInterface;
+    public BaseWeapon currentWeapon;
 
-    public GameObject startWeapon = null;
+    public GameObject equippedWeapon = null;
 
     GameObject magSecPistolObject;
     GameObject pdShotgunObject;
-    public GameObject equippedWeapon;
-
 
     public void EquipWeapon(GameObject weapon)
     {
-        // Remove UnityEvents listener from previous weapon
-        if (currentWeaponInterface != null)
-        {
-            currentWeaponInterface.OnShoot.RemoveListener(OnShootHandler);
-            currentWeaponInterface.OnReload.RemoveListener(OnReloadHandler);
-            currentWeaponInterface.OnEnemyHit.RemoveListener(OnEnemyHitHandler);
-        }
-
         // Instantiate "new" weapon, bad code i know
-        currentWeaponInterface = weapon.GetComponent<IWeapon>();
+        currentWeapon = weapon.GetComponent<BaseWeapon>();
         equippedWeapon = weapon;
 
-        if(currentWeaponInterface != null)
-        { 
-            currentWeaponInterface.OnShoot.AddListener(OnShootHandler);
-            currentWeaponInterface.OnReload.AddListener(OnReloadHandler);
-            currentWeaponInterface.OnEnemyHit.AddListener(OnEnemyHitHandler);
-        }
-        Debug.Log("Equipped weapon: " + currentWeaponInterface.GetType().Name);
+        Debug.Log("Equipped weapon: " + currentWeapon.GetType().Name);
     }
-
-    private void OnShootHandler()
-    {
-        Debug.Log("PlayerWeapon shoot event is handling!");
-
-    }
-
-    private void OnReloadHandler()
-    {
-        Debug.Log("PlayerWeapon reload event is handling!");
-    }
-
-    private void OnEnemyHitHandler(float damage)
-    {
-        Debug.Log("PlayerWeapon enemy hit event is handling!");
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
-        // Check for null weapon
-        if (startWeapon == null)
-            startWeapon = magSecPistolObject;
-
         // Initialise all weapons
-        magSecPistolObject = new GameObject();
-        magSecPistolObject.AddComponent<MagSecPistol>();
-        pdShotgunObject = new GameObject();
-        pdShotgunObject.AddComponent<PdShotgun>();
+        equippedWeapon = FindObjectOfType<MagSecPistol>().gameObject; 
 
-        equippedWeapon = Instantiate(startWeapon);
-        currentWeaponInterface = startWeapon.GetComponent<IWeapon>();
+        currentWeapon = equippedWeapon.GetComponent<BaseWeapon>();
 
-        if (currentWeaponInterface == null)
+        if (currentWeapon == null)
         {
-            Debug.LogError("Failed to get IWeapon component from the starting weapon.");
+            Debug.LogError("Current weapon is null!");
             return;
         }
-
-        // Equip starting weapon
-        EquipWeapon(startWeapon);
-
-        // Sets correct interface
-        currentWeaponInterface.OnShoot.AddListener(OnShootHandler);
-        currentWeaponInterface.OnReload.AddListener(OnReloadHandler);
-        currentWeaponInterface.OnEnemyHit.AddListener(OnEnemyHitHandler);
+       
+        Debug.Log(equippedWeapon);
     }
 
     // Update is called once per frame

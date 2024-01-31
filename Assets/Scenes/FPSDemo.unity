@@ -198,6 +198,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d2f6487a996479d4698273eaaf2f8de5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 681682597}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d2f6487a996479d4698273eaaf2f8de5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 681682598}
   m_SourcePrefab: {fileID: 100100000, guid: d2f6487a996479d4698273eaaf2f8de5, type: 3}
 --- !u!1 &6080903
 GameObject:
@@ -1124,13 +1127,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ce5e3ad7a6dee4da23e70c59c7cb49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onShoot:
+  weaponEvents: {fileID: 0}
+  raycastRange: 50
+  fireRate: 0.3
+  maxReserveAmmo: 81
+  currentReserveAmmo: 81
+  damage: 20
+  reloadTimer: 2.2
+  inaccuracyAngle: 1
+  playerCam: {fileID: 851025933}
+  isReloading: 0
+--- !u!114 &681682598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681682595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60a029f28ab1a44ea6847b834fdf74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnShoot:
     m_PersistentCalls:
       m_Calls: []
-  onReload:
+  OnReload:
     m_PersistentCalls:
       m_Calls: []
-  onEnemyHit:
+  OnEnemyHit:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1608382797}
@@ -1145,16 +1170,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  shootSound: {fileID: 8300000, guid: 3b052d3b33bbd9c47b6491681c67772b, type: 3}
-  shootVolume: 0.1
-  raycastRange: 50
-  fireRate: 0.3
-  maxReserveAmmo: 81
-  currentReserveAmmo: 81
-  damage: 20
-  reloadTimer: 2.2
-  inaccuracyAngle: 1
-  playerCam: {fileID: 851025933}
 --- !u!1 &750401565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,29 +2117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd35f347dfdfc2a4daffd392b49318da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onShoot:
-    m_PersistentCalls:
-      m_Calls: []
-  onReload:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnemyHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608382797}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: TakeDamage
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 35
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  shootSound: {fileID: 0}
-  shootVolume: 0.1
+  weaponEvents: {fileID: 0}
   raycastRange: 20
   fireRate: 1
   maxReserveAmmo: 18
@@ -2133,6 +2126,7 @@ MonoBehaviour:
   reloadTimer: 1
   inaccuracyAngle: 1
   playerCam: {fileID: 851025933}
+  isReloading: 0
 --- !u!1 &1348661322
 GameObject:
   m_ObjectHideFlags: 0
@@ -2918,7 +2912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7ed4d5ea24f9343b24bde8ed2979e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startWeapon: {fileID: 681682595}
+  currentWeapon: {fileID: 681682597}
   equippedWeapon: {fileID: 0}
 --- !u!1001 &4497186205259567241
 PrefabInstance:
