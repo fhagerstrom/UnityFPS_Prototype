@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +7,8 @@ public class PdShotgun : BaseWeapon
     // Start is called before the first frame update
     void Start()
     {
-      
+        currentBulletsLeft = maxBullets;
+        currentReserveAmmo = maxReserveAmmo;
     }
 
     // Update is called once per frame
@@ -21,7 +19,6 @@ public class PdShotgun : BaseWeapon
 
     public override void Shoot()
     {
-        Debug.Log("Firing Shotgun.");
         base.Shoot();
     }
 

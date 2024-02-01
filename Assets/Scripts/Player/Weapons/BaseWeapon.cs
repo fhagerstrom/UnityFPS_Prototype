@@ -1,3 +1,4 @@
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,38 +8,36 @@ public class BaseWeapon : MonoBehaviour
     [Header("Weapon Properties")]
     [SerializeField]
     protected float raycastRange = 50f;
-    public float fireRate;
+    public float fireRate = 0.3f;
+    protected float fireRateCooldown = 0f;
 
     protected int maxBullets = 9;
-    protected int bulletsLeft = 9;
+    protected int currentBulletsLeft = 9;
     public int maxReserveAmmo = 81;
     public int currentReserveAmmo = 81;
     public float damage = 20f;
 
     [SerializeField]
     protected float reloadTimer = 2.2f;
-
-    protected float reloadTimeRemaining = 0f;
+    protected float reloadTimerCooldown = 2.2f;
 
     [SerializeField]
-    protected float inaccuracyAngle;
+    protected float inaccuracyAngle = 5.0f;
 
     public Camera playerCam;
-    public bool isReloading = false;
-
-    protected float fireRateCooldown = 0f;
+    public bool canShoot = true;
+    public bool startReloadTimer = false;
 
     private Enemy enemy;
 
     private void Start()
     {
-        bulletsLeft = maxBullets;
-        currentReserveAmmo = maxReserveAmmo;
+       // Initializing weapon properties in their own classes. E.g  currentBulletsLeft in MagSecPistol
     }
 
     public virtual void Update()
     {
-        // Reload();
+
     }
 
     public void OnShoot()
@@ -60,82 +59,80 @@ public class BaseWeapon : MonoBehaviour
 
     public virtual void Shoot()
     {
-        Debug.Log("Firing weapon!");
-
-        if (bulletsLeft > 0)
+        if (canShoot)
         {
-            // Testing random inaccuracy
-            Vector3 shotDirection = playerCam.transform.forward;
-            shotDirection = Quaternion.Euler(Random.Range(-inaccuracyAngle, inaccuracyAngle), Random.Range(-inaccuracyAngle, inaccuracyAngle), 0) * shotDirection;
-
-            RaycastHit hitInfo;
-            bool raycastHit = Physics.Raycast(playerCam.transform.position, shotDirection, out hitInfo, raycastRange);
-
-            if (raycastHit)
+            Debug.Log("Firing weapon!");
+            if (currentBulletsLeft > 0)
             {
-                enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+                // Testing random inaccuracy
+                Vector3 shotDirection = playerCam.transform.forward;
+                shotDirection = Quaternion.Euler(Random.Range(-inaccuracyAngle, inaccuracyAngle), Random.Range(-inaccuracyAngle, inaccuracyAngle), 0) * shotDirection;
+                RaycastHit hitInfo;
+                bool raycastHit = Physics.Raycast(playerCam.transform.position, shotDirection, out hitInfo, raycastRange);
 
-                if (enemy != null)
+                if (raycastHit)
                 {
-                    Debug.Log("Hit enemy!");
-                    // Apply damage
-                    OnEnemyHit(damage);
+                    enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+
+                    if (enemy != null)
+                    {
+                        Debug.Log("Hit enemy!");
+                        // Apply damage
+                        OnEnemyHit(damage);
+                    }
+
+                    // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
+
                 }
 
-                // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
+                currentBulletsLeft--;
+                fireRateCooldown = 0;
+                Debug.Log("Current bullets left: " + currentBulletsLeft);
+
+                if (currentBulletsLeft == 0)
+                {
+                    OnReload();
+                    Debug.Log("YOU NEED MORE BOULETS! INVOKING RELOAD!");
+                }
 
             }
-
-            bulletsLeft--;
-            fireRateCooldown = 0;
-            Debug.Log(bulletsLeft);
         }
+    }
 
-        // If we have no more bullets in current magazine
-        else
+    public void HandleReloadTimer()
+    {
+        if (startReloadTimer == true)
         {
-            OnReload();
-            Debug.Log("YOU NEED MORE BOULETS! INVOKING RELOAD");
+            reloadTimer -= Time.deltaTime;
+            if (reloadTimer <= 0)
+            { 
+                canShoot = true;
+                startReloadTimer = false;
+                reloadTimer = reloadTimerCooldown;
+            }
         }
     }
 
     public virtual void Reload()
     {
-        // Check if conditions allow for reloading
-        if (!isReloading || currentReserveAmmo <= 0)
+        // Only enter Reload function if we have reserve ammo left and the weapon has shot at least once
+        if (currentReserveAmmo > 0 && (currentBulletsLeft < maxBullets))
         {
-            return;
-        }
+            canShoot = false;
+            startReloadTimer = true;
+            Debug.Log("RELOADINGNGNGNGNG");
 
-        Debug.Log("RELOADINGNGNGNGNG");
-
-        // Auto reload if empty
-        if (bulletsLeft <= 0)
-        {
-            isReloading = true;
-        }
-
-        // If reloading, wait for reload timer to finish
-        if (isReloading)
-        {
-            reloadTimeRemaining += Time.deltaTime;
-
-            // If reload timer is complete, update values and end reload
-            if (reloadTimeRemaining >= reloadTimer)
+            // Check for ammo capacity
+            if (currentReserveAmmo < maxBullets)
             {
-                // Check for ammo capacity
-                if (currentReserveAmmo < maxBullets)
-                {
-                    bulletsLeft = currentReserveAmmo;
-                }
-
-                bulletsLeft = maxBullets;
-                Debug.Log("Reload Update, bullets: " + bulletsLeft);
-
-                // Reset reload variables
-                reloadTimeRemaining = 0;
-                isReloading = false;
+                currentBulletsLeft = currentReserveAmmo;
             }
+
+            currentReserveAmmo -= (maxBullets - currentBulletsLeft);
+            Debug.Log("Reload update - Current reserve ammo: " + currentReserveAmmo);
+            currentBulletsLeft = maxBullets;
+            Debug.Log("Reload Update, bullets: " + currentBulletsLeft);
+            
         }
     }
 }

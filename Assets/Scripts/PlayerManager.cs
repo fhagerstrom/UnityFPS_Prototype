@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     public PlayerInput.OnFootActions onFoot;
  
     private PlayerMotor motor;
     private PlayerLook look;
-    private PlayerManager playerManager;
+    private WeaponManager weaponManager;
     private BaseWeapon baseWeapon;
 
     // Start is called before the first frame update
@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
-        playerManager = GetComponent<PlayerManager>();
+        weaponManager = GetComponent<WeaponManager>();
         baseWeapon = GetComponent<BaseWeapon>();
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
@@ -37,6 +37,8 @@ public class InputManager : MonoBehaviour
     {
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
+
+        weaponManager.equippedWeapon.GetComponent<BaseWeapon>().HandleReloadTimer();
     }
 
     private void FixedUpdate()
@@ -58,12 +60,12 @@ public class InputManager : MonoBehaviour
     private void Shoot()
     {
         // Call the Shoot method of the current weapon
-        playerManager.equippedWeapon.GetComponent<BaseWeapon>().Shoot();
+        weaponManager.equippedWeapon.GetComponent<BaseWeapon>().Shoot();
     }
 
     private void Reload()
     {
-        playerManager.equippedWeapon.GetComponent<BaseWeapon>().isReloading = true;
+        weaponManager.equippedWeapon.GetComponent<BaseWeapon>().Reload();
     }
 
     private void SwitchWeapon()

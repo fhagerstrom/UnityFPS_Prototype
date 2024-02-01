@@ -11,14 +11,14 @@ public class PlayerInteract : MonoBehaviour
     public LayerMask mask;
     private PlayerUI playerUI;
 
-    private InputManager inputManager;
+    private PlayerManager inputManager;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<PlayerLook>().cam;
         playerUI = GetComponent<PlayerUI>();
-        inputManager = GetComponent<InputManager>();
+        inputManager = GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame

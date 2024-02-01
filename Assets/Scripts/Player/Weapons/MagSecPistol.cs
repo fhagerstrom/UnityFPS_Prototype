@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +6,8 @@ public class MagSecPistol : BaseWeapon
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentBulletsLeft = maxBullets;
+        currentReserveAmmo = maxReserveAmmo;
     }
 
     // Update is called once per frame
@@ -19,13 +19,13 @@ public class MagSecPistol : BaseWeapon
 
     public override void Shoot()
     {
-        Debug.Log("Firing MagSec Pistol.");
         base.Shoot();
     }
 
     public override void Reload()
     {
-        Debug.Log("RELOAD PISTOL");
         base.Reload();
+
+
     }
 }
