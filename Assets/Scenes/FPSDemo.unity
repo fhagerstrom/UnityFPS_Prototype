@@ -2129,7 +2129,7 @@ MonoBehaviour:
   maxReserveAmmo: 18
   currentReserveAmmo: 81
   damage: 35
-  reloadTimer: 2.2
+  reloadTimer: 1.25
   inaccuracyAngle: 1
   playerCam: {fileID: 851025933}
   canShoot: 1
@@ -2155,15 +2155,15 @@ MonoBehaviour:
   OnEnemyHit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 1608382797}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: TakeDamage
+        m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
+          m_FloatArgument: 12.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -2952,8 +2952,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec7ed4d5ea24f9343b24bde8ed2979e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentWeapon: {fileID: 681682597}
+  weapons: []
   equippedWeapon: {fileID: 0}
+  magSecPistolObject: {fileID: 681682597}
+  shotgunObject: {fileID: 1296438956}
 --- !u!1001 &4497186205259567241
 PrefabInstance:
   m_ObjectHideFlags: 0

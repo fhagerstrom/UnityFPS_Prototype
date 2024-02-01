@@ -109,6 +109,7 @@ public class BaseWeapon : MonoBehaviour
                 canShoot = true;
                 startReloadTimer = false;
                 reloadTimer = reloadTimerCooldown;
+                Debug.Log("Reload complete! Current Bullets maxed. - " + currentBulletsLeft);
             }
         }
     }
@@ -131,8 +132,6 @@ public class BaseWeapon : MonoBehaviour
             currentReserveAmmo -= (maxBullets - currentBulletsLeft);
             Debug.Log("Reload update - Current reserve ammo: " + currentReserveAmmo);
             currentBulletsLeft = maxBullets;
-            Debug.Log("Reload Update, bullets: " + currentBulletsLeft);
-            
         }
     }
 }

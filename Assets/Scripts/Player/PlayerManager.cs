@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
 
-        weaponManager.equippedWeapon.GetComponent<BaseWeapon>().HandleReloadTimer();
+        weaponManager.equippedWeapon.HandleReloadTimer();
     }
 
     private void FixedUpdate()
@@ -70,7 +70,12 @@ public class PlayerManager : MonoBehaviour
 
     private void SwitchWeapon()
     {
-        // TODO: Add logic when more weapons are added
+        // Cycle to the next weapon in the list
+        int currentIndex = weaponManager.weapons.IndexOf(weaponManager.equippedWeapon);
+        int nextIndex = (currentIndex + 1) % weaponManager.weapons.Count;
+
+        // Set the equipped weapon to the next weapon in the list
+        weaponManager.equippedWeapon = weaponManager.weapons[nextIndex];
     }
 
 }
