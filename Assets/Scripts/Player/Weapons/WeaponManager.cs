@@ -11,17 +11,15 @@ public class WeaponManager : MonoBehaviour
     public MagSecPistol magSecPistolObject;
     public PdShotgun shotgunObject;
 
+    private Transform playerTransform;
+
     // Start is called before the first frame update
     void Start()
     {
         // Initialize all weapons
-        weapons = new List<BaseWeapon>
-        {
-           magSecPistolObject,
-           shotgunObject,
-        };
+        weapons = new List<BaseWeapon>();
 
-        equippedWeapon = weapons[0]; // Start with MagSec pistol
+        equippedWeapon = null; // Start with no guns
 
         // Activate the GameObject of the initially equipped weapon
         equippedWeapon.gameObject.SetActive(true);
@@ -35,7 +33,7 @@ public class WeaponManager : MonoBehaviour
             }
         }
 
-        Debug.Log(equippedWeapon.ToString());
+        playerTransform = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -43,5 +41,44 @@ public class WeaponManager : MonoBehaviour
     {
 
     }
-   
+
+    // Function to equip a new weapon
+    public void EquipWeapon(BaseWeapon newWeapon)
+    {
+        if (newWeapon != null && !weapons.Contains(newWeapon))
+        {
+            // Deactivate current weapon
+            if (equippedWeapon != null)
+                equippedWeapon.gameObject.SetActive(false);
+
+            // Add weapon to list
+            if (!weapons.Contains(newWeapon))
+                weapons.Add(newWeapon);
+
+            // Set new weapon as the equipped weapon
+            equippedWeapon = newWeapon;
+            equippedWeapon.gameObject.SetActive(true);
+
+            // Set the player as the parent of the weapon
+            if (playerTransform != null)
+                equippedWeapon.transform.SetParent(playerTransform);
+
+            Debug.Log("Equipped: " + equippedWeapon.ToString());
+        }
+    }
+
+    public void PickupWeapon(Collider weaponCollider)
+    {
+        BaseWeapon pickedUpWeapon = weaponCollider.GetComponent<BaseWeapon>();
+
+        if(pickedUpWeapon != null)
+        {
+            EquipWeapon(pickedUpWeapon);
+
+            weaponCollider.gameObject.SetActive(false);
+
+            Debug.Log("Picked up weapon: " + pickedUpWeapon.ToString());
+        }
+    }
+
 }

@@ -22,10 +22,10 @@ public class PdShotgun : BaseWeapon
     void Awake()
     {
         raycastRange = 15f;
-        fireRate = 1.1f;
+        fireRate = 1.2f;
 
-        reloadTimer = 1.0f;
-        reloadTimerCooldown = reloadTimer;
+        reloadTimerCooldown = 1.8f;
+        reloadTimer = reloadTimerCooldown;
 
         maxBullets = 9;
         maxReserveAmmo = 18;

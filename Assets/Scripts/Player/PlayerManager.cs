@@ -23,10 +23,9 @@ public class PlayerManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
         weaponManager = GetComponent<WeaponManager>();
-        baseWeapon = GetComponent<BaseWeapon>();
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
-        onFoot.Jump.performed += ctx => motor.Jump();
+        // onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Fire.performed += ctx => Shoot();
         onFoot.Reload.performed += ctx => Reload();
         onFoot.SwitchWeapon.performed += ctx => SwitchWeapon();
@@ -84,6 +83,18 @@ public class PlayerManager : MonoBehaviour
         weaponManager.equippedWeapon.gameObject.SetActive(true);
 
         Debug.Log("Switched weapon to: " + weaponManager.equippedWeapon);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the collided object has BaseWeapon component
+        BaseWeapon pickedUpWeapon = other.GetComponent<BaseWeapon>();
+
+        // If it does, equip the weapon
+        if (pickedUpWeapon != null)
+        {
+            weaponManager.PickupWeapon(other);
+        }
     }
 
 }

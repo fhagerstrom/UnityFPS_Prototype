@@ -19,7 +19,7 @@ public class BaseWeapon : MonoBehaviour
     protected float damage = 20f;
 
     [SerializeField]
-    protected float reloadTimer = 1.5f;
+    protected float reloadTimer;
     protected float reloadTimerCooldown = 1.5f;
 
     [SerializeField]
