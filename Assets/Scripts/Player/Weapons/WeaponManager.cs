@@ -21,7 +21,7 @@ public class WeaponManager : MonoBehaviour
            shotgunObject,
         };
 
-        equippedWeapon = weapons[0];
+        equippedWeapon = weapons[0]; // Start with MagSec pistol
         Debug.Log(equippedWeapon.ToString());
     }
 

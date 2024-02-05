@@ -76,6 +76,7 @@ public class PlayerManager : MonoBehaviour
 
         // Set the equipped weapon to the next weapon in the list
         weaponManager.equippedWeapon = weaponManager.weapons[nextIndex];
+        Debug.Log("Switched weapon to: " + weaponManager.equippedWeapon);
     }
 
 }

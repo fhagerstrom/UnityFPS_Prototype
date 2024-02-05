@@ -3,9 +3,10 @@ using UnityEngine.Events;
 
 public class MagSecPistol : BaseWeapon
 {
-    // Start is called before the first frame update
-    void Start()
+    // Awake is called before the first frame update
+    void Awake()
     {
+        fireRateCooldown = 0.5f;
         currentBulletsLeft = maxBullets;
         currentReserveAmmo = maxReserveAmmo;
     }
@@ -14,6 +15,7 @@ public class MagSecPistol : BaseWeapon
     public override void Update()
     {
         Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward * raycastRange, Color.blue);
+
         base.Update();
     }
 

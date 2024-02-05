@@ -5,11 +5,12 @@ using UnityEngine.Events;
 // Base class weapon, holds all base info on bullets, sounds and reload logic
 public class BaseWeapon : MonoBehaviour
 {
+    // DEFAULT WEAPON VALUES - CHANGE IN WEAPON-SPECIFIC CLASSES
     [Header("Weapon Properties")]
     [SerializeField]
     protected float raycastRange = 50f;
-    public float fireRate = 0.3f;
     protected float fireRateCooldown = 0f;
+    protected float fireRate = 0.5f;
 
     protected int maxBullets = 9;
     protected int currentBulletsLeft = 9;
@@ -28,7 +29,7 @@ public class BaseWeapon : MonoBehaviour
     public bool canShoot = true;
     public bool startReloadTimer = false;
 
-    private Enemy enemy;
+    protected Enemy enemy;
 
     private void Start()
     {
@@ -37,7 +38,10 @@ public class BaseWeapon : MonoBehaviour
 
     public virtual void Update()
     {
-
+        if (fireRateCooldown > 0)
+        {
+            fireRateCooldown -= Time.deltaTime;
+        }
     }
 
     public void OnShoot()
@@ -54,14 +58,15 @@ public class BaseWeapon : MonoBehaviour
 
     public void OnEnemyHit(float damage)
     {
+        Debug.Log("Incoming damage: " + damage);
         GetComponent<WeaponEvents>().OnEnemyHit.Invoke(damage);
     }
 
     public virtual void Shoot()
     {
-        if (canShoot)
+        if (canShoot && fireRateCooldown <= 0)
         {
-            Debug.Log("Firing weapon!");
+            // Debug.Log("Firing weapon!");
             if (currentBulletsLeft > 0)
             {
                 // Testing random inaccuracy
@@ -86,7 +91,7 @@ public class BaseWeapon : MonoBehaviour
                 }
 
                 currentBulletsLeft--;
-                fireRateCooldown = 0;
+                fireRateCooldown = fireRate;
                 Debug.Log("Current bullets left: " + currentBulletsLeft);
 
                 if (currentBulletsLeft == 0)
@@ -109,7 +114,7 @@ public class BaseWeapon : MonoBehaviour
                 canShoot = true;
                 startReloadTimer = false;
                 reloadTimer = reloadTimerCooldown;
-                Debug.Log("Reload complete! Current Bullets maxed. - " + currentBulletsLeft);
+                Debug.Log("Reload complete! Current bullets maxed, which is: " + currentBulletsLeft);
             }
         }
     }
