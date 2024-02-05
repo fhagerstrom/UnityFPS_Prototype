@@ -22,6 +22,19 @@ public class WeaponManager : MonoBehaviour
         };
 
         equippedWeapon = weapons[0]; // Start with MagSec pistol
+
+        // Activate the GameObject of the initially equipped weapon
+        equippedWeapon.gameObject.SetActive(true);
+
+        // Deactivate of all other weapons
+        foreach (var weapon in weapons)
+        {
+            if (weapon != equippedWeapon)
+            {
+                weapon.gameObject.SetActive(false);
+            }
+        }
+
         Debug.Log(equippedWeapon.ToString());
     }
 

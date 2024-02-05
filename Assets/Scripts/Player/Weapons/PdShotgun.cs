@@ -16,7 +16,7 @@ public class PdShotgun : BaseWeapon
     void Awake()
     {
         raycastRange = 15f;
-        fireRate = 1.2f;
+        fireRate = 1.1f;
 
         reloadTimer = 1.0f;
         reloadTimerCooldown = reloadTimer;
@@ -25,7 +25,7 @@ public class PdShotgun : BaseWeapon
         maxReserveAmmo = 18;
         currentBulletsLeft = maxBullets;
         currentReserveAmmo = maxReserveAmmo;
-        damage = 12.5f;
+        damage = 25f;
     }
 
     // Update is called once per frame
@@ -66,6 +66,7 @@ public class PdShotgun : BaseWeapon
                         Debug.Log("Hit enemy!");
                         // Apply damage
                         totalDamage += damage;
+                        //
                     }
 
                     // Debug.DrawRay(playerCam.transform.position, shotDirection, Color.green, raycastRange);

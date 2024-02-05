@@ -14,9 +14,9 @@ public class BaseWeapon : MonoBehaviour
 
     protected int maxBullets = 9;
     protected int currentBulletsLeft = 9;
-    public int maxReserveAmmo = 81;
-    public int currentReserveAmmo = 81;
-    public float damage = 20f;
+    protected int maxReserveAmmo = 81;
+    protected int currentReserveAmmo = 81;
+    protected float damage = 20f;
 
     [SerializeField]
     protected float reloadTimer = 2.2f;

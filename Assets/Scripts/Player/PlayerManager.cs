@@ -74,8 +74,15 @@ public class PlayerManager : MonoBehaviour
         int currentIndex = weaponManager.weapons.IndexOf(weaponManager.equippedWeapon);
         int nextIndex = (currentIndex + 1) % weaponManager.weapons.Count;
 
+        // Deactivate the currently equipped weapon
+        weaponManager.equippedWeapon.gameObject.SetActive(false);
+
         // Set the equipped weapon to the next weapon in the list
         weaponManager.equippedWeapon = weaponManager.weapons[nextIndex];
+
+        // Activate the newly equipped weapon
+        weaponManager.equippedWeapon.gameObject.SetActive(true);
+
         Debug.Log("Switched weapon to: " + weaponManager.equippedWeapon);
     }
 
