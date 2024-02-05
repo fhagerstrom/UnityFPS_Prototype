@@ -3,12 +3,23 @@ using UnityEngine.Events;
 
 public class MagSecPistol : BaseWeapon
 {
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip magSecShootSfx;
+    [SerializeField]
+    private AudioClip magSecReloadSfx;
+
+
     // Awake is called before the first frame update
     void Awake()
     {
         fireRateCooldown = 0.5f;
         currentBulletsLeft = maxBullets;
         currentReserveAmmo = maxReserveAmmo;
+
+        // Assign audio clips
+        shootSound = magSecShootSfx;
+        reloadSound = magSecReloadSfx;
     }
 
     // Update is called once per frame

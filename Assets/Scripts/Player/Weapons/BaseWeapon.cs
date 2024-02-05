@@ -19,8 +19,8 @@ public class BaseWeapon : MonoBehaviour
     protected float damage = 20f;
 
     [SerializeField]
-    protected float reloadTimer = 2.2f;
-    protected float reloadTimerCooldown = 2.2f;
+    protected float reloadTimer = 1.5f;
+    protected float reloadTimerCooldown = 1.5f;
 
     [SerializeField]
     protected float inaccuracyAngle = 5.0f;
@@ -31,9 +31,21 @@ public class BaseWeapon : MonoBehaviour
 
     protected Enemy enemy;
 
+    [Header("Audio")]
+    protected AudioClip shootSound;
+    protected AudioClip reloadSound;
+
+    protected AudioSource weaponAudioSource;
+
     private void Start()
     {
-       // Initializing weapon properties in their own classes. E.g  currentBulletsLeft in MagSecPistol
+        // Initializing weapon properties in their own classes. E.g  currentBulletsLeft in MagSecPistol
+
+        // Audio setup
+        weaponAudioSource = gameObject.AddComponent<AudioSource>();
+        weaponAudioSource.playOnAwake = false;
+        weaponAudioSource.volume = 0.15f;
+
     }
 
     public virtual void Update()
@@ -46,20 +58,21 @@ public class BaseWeapon : MonoBehaviour
 
     public void OnShoot()
     {
-        GetComponent<WeaponEvents>().OnShoot.Invoke();
+        // GetComponent<WeaponEvents>().OnShoot.Invoke();
         Shoot();
     }
 
     public void OnReload()
     {
-        GetComponent<WeaponEvents>().OnReload.Invoke();
+        // GetComponent<WeaponEvents>().OnReload.Invoke();
         Reload();
     }
 
     public void OnEnemyHit(float damage)
     {
         Debug.Log("Incoming damage: " + damage);
-        GetComponent<WeaponEvents>().OnEnemyHit.Invoke(damage);
+        // GetComponent<WeaponEvents>().OnEnemyHit.Invoke(damage);
+        enemy.TakeDamage(damage);
     }
 
     public virtual void Shoot()
@@ -88,6 +101,14 @@ public class BaseWeapon : MonoBehaviour
 
                     // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
 
+                }
+
+                // Sounds
+                if (shootSound != null)
+                {
+                    weaponAudioSource.clip = shootSound;
+                    weaponAudioSource.Play();
+                    weaponAudioSource.volume = 0.1f;
                 }
 
                 currentBulletsLeft--;
@@ -137,6 +158,12 @@ public class BaseWeapon : MonoBehaviour
             currentReserveAmmo -= (maxBullets - currentBulletsLeft);
             Debug.Log("Reload update - Current reserve ammo: " + currentReserveAmmo);
             currentBulletsLeft = maxBullets;
+
+            if (reloadSound != null)
+            {
+                weaponAudioSource.clip = reloadSound;
+                weaponAudioSource.Play();
+            }
         }
     }
 }

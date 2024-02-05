@@ -3,6 +3,12 @@ using UnityEngine.Events;
 
 public class PdShotgun : BaseWeapon
 {
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip shotgunShootSfx;
+    [SerializeField]
+    private AudioClip shotgunReloadSfx;
+
     private Vector3[] blastCone = new Vector3[]
     {
         new Vector3(-10f, -10f, 0),
@@ -26,6 +32,9 @@ public class PdShotgun : BaseWeapon
         currentBulletsLeft = maxBullets;
         currentReserveAmmo = maxReserveAmmo;
         damage = 25f;
+
+        shootSound = shotgunShootSfx;
+        reloadSound = shotgunReloadSfx;
     }
 
     // Update is called once per frame
@@ -64,18 +73,21 @@ public class PdShotgun : BaseWeapon
                     if (enemy != null)
                     {
                         Debug.Log("Hit enemy!");
-                        // Apply damage
+                        // Add damage based on how many rays hit
                         totalDamage += damage;
-                        //
+                        // Apply damage
+                        OnEnemyHit(totalDamage);
                     }
 
                     // Debug.DrawRay(playerCam.transform.position, shotDirection, Color.green, raycastRange);
                 }
             }
 
-            if(totalDamage > 0f)
+            // Sounds
+            if (shootSound != null)
             {
-                OnEnemyHit(totalDamage);
+                weaponAudioSource.clip = shootSound;
+                weaponAudioSource.Play();
             }
 
             currentBulletsLeft--;

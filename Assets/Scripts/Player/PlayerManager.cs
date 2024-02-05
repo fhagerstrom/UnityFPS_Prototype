@@ -60,24 +60,24 @@ public class PlayerManager : MonoBehaviour
     private void Shoot()
     {
         // Call the Shoot method of the current weapon
-        weaponManager.equippedWeapon.GetComponent<BaseWeapon>().Shoot();
+        weaponManager.equippedWeapon.Shoot();
     }
 
     private void Reload()
     {
-        weaponManager.equippedWeapon.GetComponent<BaseWeapon>().Reload();
+        weaponManager.equippedWeapon.Reload();
     }
 
     private void SwitchWeapon()
     {
-        // Cycle to the next weapon in the list
+        // Cycle to the next weapon
         int currentIndex = weaponManager.weapons.IndexOf(weaponManager.equippedWeapon);
         int nextIndex = (currentIndex + 1) % weaponManager.weapons.Count;
 
         // Deactivate the currently equipped weapon
         weaponManager.equippedWeapon.gameObject.SetActive(false);
 
-        // Set the equipped weapon to the next weapon in the list
+        // Set the equipped weapon to the next weapon
         weaponManager.equippedWeapon = weaponManager.weapons[nextIndex];
 
         // Activate the newly equipped weapon

@@ -1128,14 +1128,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastRange: 50
-  maxReserveAmmo: 81
-  currentReserveAmmo: 81
-  damage: 20
   reloadTimer: 2.2
   inaccuracyAngle: 1
   playerCam: {fileID: 851025933}
   canShoot: 1
   startReloadTimer: 0
+  magSecShootSfx: {fileID: 8300000, guid: 3b052d3b33bbd9c47b6491681c67772b, type: 3}
+  magSecReloadSfx: {fileID: 8300000, guid: e2ef137f95f398843b7be7035c41fcab, type: 3}
 --- !u!114 &681682598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1156,19 +1155,7 @@ MonoBehaviour:
       m_Calls: []
   OnEnemyHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608382797}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: TakeDamage
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &750401565
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,14 +2111,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastRange: 20
-  maxReserveAmmo: 18
-  currentReserveAmmo: 81
-  damage: 35
   reloadTimer: 1.25
   inaccuracyAngle: 1
   playerCam: {fileID: 851025933}
   canShoot: 1
   startReloadTimer: 0
+  shotgunShootSfx: {fileID: 8300000, guid: 8a5528f8f896a9943a299af0446eea28, type: 3}
+  shotgunReloadSfx: {fileID: 0}
 --- !u!114 &1296438957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2152,19 +2138,7 @@ MonoBehaviour:
       m_Calls: []
   OnEnemyHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608382797}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: TakeDamage
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1348661322
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,17 +2496,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1494681339}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1608382797 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8103711347985147503, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
-  m_PrefabInstance: {fileID: 4497186205259567241}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e07e4b0f314e7ef40972437dbe041b74, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1625661196
 GameObject:
   m_ObjectHideFlags: 0
