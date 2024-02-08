@@ -45,6 +45,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //agent.SetDestination(player.transform.position);
+
         PlayerInSight();
         currentState = stateMachine.activeState.ToString();
         health = Mathf.Clamp(health, 0, maxHealth);

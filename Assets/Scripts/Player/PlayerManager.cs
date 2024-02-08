@@ -11,7 +11,6 @@ public class PlayerManager : MonoBehaviour
     private PlayerMotor motor;
     private PlayerLook look;
     private WeaponManager weaponManager;
-    private BaseWeapon baseWeapon;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,14 +34,16 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
-        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
 
-        weaponManager.equippedWeapon.HandleReloadTimer();
+        if (weaponManager.equippedWeapon != null)
+        {
+            weaponManager.equippedWeapon.HandleReloadTimer();
+        }
     }
 
     private void FixedUpdate()
     {
-        
+        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
 
     private void OnEnable()
@@ -59,30 +60,37 @@ public class PlayerManager : MonoBehaviour
     private void Shoot()
     {
         // Call the Shoot method of the current weapon
-        weaponManager.equippedWeapon.Shoot();
+        if(weaponManager.equippedWeapon != null)
+            weaponManager.equippedWeapon.Shoot();
     }
 
     private void Reload()
     {
-        weaponManager.equippedWeapon.Reload();
+        if (weaponManager.equippedWeapon != null)
+            weaponManager.equippedWeapon.Reload();
     }
 
     private void SwitchWeapon()
     {
-        // Cycle to the next weapon
-        int currentIndex = weaponManager.weapons.IndexOf(weaponManager.equippedWeapon);
-        int nextIndex = (currentIndex + 1) % weaponManager.weapons.Count;
+        if(!weaponManager.magSecPistolObject.activeSelf && weaponManager.pickedUpPistol == true) 
+        {
+            weaponManager.magSecPistolObject.SetActive(true);
+            weaponManager.pdShotgunObject.SetActive(false);
 
-        // Deactivate the currently equipped weapon
-        weaponManager.equippedWeapon.gameObject.SetActive(false);
+            weaponManager.equippedWeapon = weaponManager.magSecPistolObject.GetComponent<MagSecPistol>();
 
-        // Set the equipped weapon to the next weapon
-        weaponManager.equippedWeapon = weaponManager.weapons[nextIndex];
+            Debug.Log("Switched weapon to: " + weaponManager.magSecPistolObject);
+        }
 
-        // Activate the newly equipped weapon
-        weaponManager.equippedWeapon.gameObject.SetActive(true);
+        else if (!weaponManager.pdShotgunObject.activeSelf && weaponManager.pickedUpShotgun == true)
+        {
+            weaponManager.pdShotgunObject.SetActive(true);
+            weaponManager.magSecPistolObject.SetActive(false);
 
-        Debug.Log("Switched weapon to: " + weaponManager.equippedWeapon);
+            weaponManager.equippedWeapon = weaponManager.pdShotgunObject.GetComponent<PdShotgun>();
+
+            Debug.Log("Switched weapon to: " + weaponManager.pdShotgunObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -6,10 +6,14 @@ public class ObjectPoolManager : MonoBehaviour
 {
     public static ObjectPoolManager instance;
 
-    public GameObject bulletPrefab;
-    public int poolSize = 10;
+    public GameObject bulletObject;
+    public int bulletPoolSize = 10;
+
+    //public GameObject enemyObject;
+    //public int enemyPoolSize = 15;
 
     private List<GameObject> bulletPool;
+    //private List<GameObject> enemyPool;
 
     // Awake is called before the first frame update
     void Awake()
@@ -35,13 +39,23 @@ public class ObjectPoolManager : MonoBehaviour
     private void InitializePool()
     {
         bulletPool = new List<GameObject>();
+        //enemyPool = new List<GameObject>();
 
-        for(int i = 0; i < poolSize; i++)
+        // Instantiate bullets
+        for(int i = 0; i < bulletPoolSize; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab);
+            GameObject bullet = Instantiate(bulletObject);
             bullet.SetActive(false);
             bulletPool.Add(bullet);
         }
+
+        // Instantiate enemies
+        //for(int i = 0; i < enemyPoolSize; i++)
+        //{
+        //    GameObject enemy = Instantiate(enemyObject);
+        //    enemy.SetActive(false);
+        //    enemyPool.Add(enemy);
+        //}
 
     }
 
@@ -54,9 +68,22 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         // If no inactive bullets found, create new ones
-        GameObject newBullet = Instantiate(bulletPrefab);
+        GameObject newBullet = Instantiate(bulletObject);
         bulletPool.Add(newBullet);
         return newBullet;
     }
+
+    //public GameObject GetEnemy() 
+    //{
+    //    foreach (GameObject enemy in enemyPool)
+    //    {
+    //        enemy.SetActive(true);
+    //        return enemy;
+    //    }
+
+    //    GameObject newEnemy = Instantiate(enemyObject);
+    //    enemyPool.Add(newEnemy);
+    //    return newEnemy;
+    //}
 
 }

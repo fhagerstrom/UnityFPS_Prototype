@@ -9,6 +9,7 @@ public class PdShotgun : BaseWeapon
     [SerializeField]
     private AudioClip shotgunReloadSfx;
 
+    // Define a blast cone by shooting x amount of rays from camera when shotgun is used
     private Vector3[] blastCone = new Vector3[]
     {
         new Vector3(-10f, -10f, 0),

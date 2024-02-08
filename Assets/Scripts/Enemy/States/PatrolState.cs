@@ -8,6 +8,8 @@ public class PatrolState : BaseState
     public int waypointIndex;
     public float waitTimer;
 
+    public GameObject player;
+
     public override void Enter()
     {
         

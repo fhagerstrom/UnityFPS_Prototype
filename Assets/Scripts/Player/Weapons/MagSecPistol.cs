@@ -13,7 +13,7 @@ public class MagSecPistol : BaseWeapon
     // Awake is called before the first frame update
     void Awake()
     {
-        fireRateCooldown = 0.5f;
+        fireRateCooldown = 0.3f;
         currentBulletsLeft = maxBullets;
         currentReserveAmmo = maxReserveAmmo;
 

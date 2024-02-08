@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,32 +9,32 @@ public class WeaponManager : MonoBehaviour
     public List<BaseWeapon> weapons;
     public BaseWeapon equippedWeapon;
 
-    public MagSecPistol magSecPistolObject;
-    public PdShotgun shotgunObject;
+    private MagSecPistol magSecPistol;
+    private PdShotgun pdShotgun;
 
-    private Transform playerTransform;
+    public GameObject magSecPistolObject;
+    public GameObject pdShotgunObject;
+
+    public bool pickedUpPistol = false;
+    public bool pickedUpShotgun = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize all weapons
-        weapons = new List<BaseWeapon>();
+        // Get weapon components
+        magSecPistol = magSecPistolObject.GetComponent<MagSecPistol>();
+        pdShotgun = pdShotgunObject.GetComponent<PdShotgun>();
 
-        equippedWeapon = null; // Start with no guns
+        // Hide the player's weapons since they aren't initially "picked up"
+        if (magSecPistol != null)
+            magSecPistol.gameObject.SetActive(false);
 
-        // Activate the GameObject of the initially equipped weapon
-        equippedWeapon.gameObject.SetActive(true);
+        if (pdShotgun != null)
+            pdShotgun.gameObject.SetActive(false);
 
-        // Deactivate of all other weapons
-        foreach (var weapon in weapons)
-        {
-            if (weapon != equippedWeapon)
-            {
-                weapon.gameObject.SetActive(false);
-            }
-        }
-
-        playerTransform = GetComponent<Transform>();
+        // Activate the initially equipped weapon
+        if(equippedWeapon != null)
+            equippedWeapon.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -42,42 +43,28 @@ public class WeaponManager : MonoBehaviour
 
     }
 
-    // Function to equip a new weapon
-    public void EquipWeapon(BaseWeapon newWeapon)
-    {
-        if (newWeapon != null && !weapons.Contains(newWeapon))
-        {
-            // Deactivate current weapon
-            if (equippedWeapon != null)
-                equippedWeapon.gameObject.SetActive(false);
-
-            // Add weapon to list
-            if (!weapons.Contains(newWeapon))
-                weapons.Add(newWeapon);
-
-            // Set new weapon as the equipped weapon
-            equippedWeapon = newWeapon;
-            equippedWeapon.gameObject.SetActive(true);
-
-            // Set the player as the parent of the weapon
-            if (playerTransform != null)
-                equippedWeapon.transform.SetParent(playerTransform);
-
-            Debug.Log("Equipped: " + equippedWeapon.ToString());
-        }
-    }
-
     public void PickupWeapon(Collider weaponCollider)
     {
+
+        if(weaponCollider.CompareTag("Pistol"))
+        {
+            if(pickedUpPistol == false)
+                pickedUpPistol = true;
+        }
+
+        if (weaponCollider.CompareTag("Shotgun"))
+        {
+            if (pickedUpShotgun == false)
+                pickedUpShotgun = true;
+        }
+
         BaseWeapon pickedUpWeapon = weaponCollider.GetComponent<BaseWeapon>();
 
         if(pickedUpWeapon != null)
         {
-            EquipWeapon(pickedUpWeapon);
-
             weaponCollider.gameObject.SetActive(false);
 
-            Debug.Log("Picked up weapon: " + pickedUpWeapon.ToString());
+            Debug.Log("Picked up weapon: " + pickedUpWeapon);
         }
     }
 
