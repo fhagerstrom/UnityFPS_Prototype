@@ -7,13 +7,16 @@ public class Enemy : MonoBehaviour
     private StateMachine stateMachine;
     private NavMeshAgent agent;
     private GameObject player;
+    private Vector3 lastKnownPos;
 
     public NavMeshAgent Agent { get => agent; }
     public GameObject Player { get => player; }
+    public Vector3 LastKnownPos { get => lastKnownPos; set => lastKnownPos = value; }
+
     public Pathing path;
 
     [Header("Sight Values")]
-    public float sightDistance = 20f;
+    public float sightDistance = 30f;
     public float enemyFov = 85f;
     public float eyeHeight;
 
@@ -45,8 +48,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //agent.SetDestination(player.transform.position);
-
         PlayerInSight();
         currentState = stateMachine.activeState.ToString();
         health = Mathf.Clamp(health, 0, maxHealth);

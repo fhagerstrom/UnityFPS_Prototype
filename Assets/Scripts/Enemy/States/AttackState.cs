@@ -33,16 +33,21 @@ public class AttackState : BaseState
             shotTimer += Time.deltaTime;
             enemy.transform.LookAt(enemy.Player.transform);
 
+            // Attack the player
             if(shotTimer > enemy.fireRate)
             {
                 Shoot();
             }
 
+            // Random movement while shooting and seeing player
             if(moveTimer > Random.Range(3, 7))
             {
                 enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
                 moveTimer = 0;
             }
+
+            // Search state related
+            enemy.LastKnownPos = enemy.Player.transform.position;
 
             // Check the returnBulletTimer
             if (returnBulletTimer > 0)
@@ -63,7 +68,7 @@ public class AttackState : BaseState
             if(losePlayerTimer > 8) 
             {
                 // Player lost, enter search state
-                stateMachine.ChangeState(new PatrolState());
+                stateMachine.ChangeState(new SearchState());
             }
         }
     }
