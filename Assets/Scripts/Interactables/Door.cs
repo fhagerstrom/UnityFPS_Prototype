@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Door : Interactable
 {
+    [SerializeField]
+    private GameObject door;
+    private bool doorOpen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +22,8 @@ public class Door : Interactable
 
     protected override void Interact()
     {
-        Debug.Log("Interacted with and destroyed: " + gameObject.name);
-        Destroy(gameObject);
+        doorOpen = !doorOpen; // Toggle between bool
+        door.GetComponent<Animator>().SetBool("IsOpen", doorOpen);
     }
 
 }

@@ -44,6 +44,7 @@ public class PlayerInteract : MonoBehaviour
                 playerUI.UpdateText(interactable.promptMsg);
                 if (inputManager.onFoot.Interact.triggered)
                 {
+                    Debug.Log("Interacted with something interactable!");
                     interactable.BaseInteract();
                 }
             }
