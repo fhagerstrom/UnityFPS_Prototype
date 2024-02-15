@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useEvents: 0
-  promptMsg: You need to open the door elsewhere.
+  promptMsg: This door opens elsewhere.
 --- !u!114 &5266314638724296596
 MonoBehaviour:
   m_ObjectHideFlags: 0
