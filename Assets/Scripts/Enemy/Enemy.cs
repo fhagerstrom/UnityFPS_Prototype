@@ -44,11 +44,6 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         health = maxHealth;
-
-        // Get enemy from object pool
-        GameObject pooledEnemy = ObjectPoolManager.instance.GetEnemy();
-        transform.position = pooledEnemy.transform.position;
-        transform.rotation = pooledEnemy.transform.rotation;
     }
 
     // Update is called once per frame
