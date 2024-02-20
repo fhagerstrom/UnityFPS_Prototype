@@ -9,11 +9,11 @@ public class ObjectPoolManager : MonoBehaviour
     public GameObject bulletObject;
     public int bulletPoolSize = 10;
 
-    //public GameObject enemyObject;
-    //public int enemyPoolSize = 15;
+    public GameObject enemyObject;
+    public int enemyPoolSize = 15;
 
     private List<GameObject> bulletPool;
-    //private List<GameObject> enemyPool;
+    private List<GameObject> enemyPool;
 
     // Awake is called before the first frame update
     void Awake()
@@ -39,7 +39,7 @@ public class ObjectPoolManager : MonoBehaviour
     private void InitializePool()
     {
         bulletPool = new List<GameObject>();
-        //enemyPool = new List<GameObject>();
+        enemyPool = new List<GameObject>();
 
         // Instantiate bullets
         for(int i = 0; i < bulletPoolSize; i++)
@@ -50,13 +50,12 @@ public class ObjectPoolManager : MonoBehaviour
         }
 
         // Instantiate enemies
-        //for(int i = 0; i < enemyPoolSize; i++)
-        //{
-        //    GameObject enemy = Instantiate(enemyObject);
-        //    enemy.SetActive(false);
-        //    enemyPool.Add(enemy);
-        //}
-
+        for (int i = 0; i < enemyPoolSize; i++)
+        {
+            GameObject enemy = Instantiate(enemyObject);
+            enemy.SetActive(false);
+            enemyPool.Add(enemy);
+        }
     }
 
     public GameObject GetBullet()
@@ -73,17 +72,20 @@ public class ObjectPoolManager : MonoBehaviour
         return newBullet;
     }
 
-    //public GameObject GetEnemy() 
-    //{
-    //    foreach (GameObject enemy in enemyPool)
-    //    {
-    //        enemy.SetActive(true);
-    //        return enemy;
-    //    }
+    public GameObject GetEnemy()
+    {
+        foreach (GameObject enemy in enemyPool)
+        {
+            if (!enemy.activeSelf)
+            {
+                enemy.SetActive(true);
+                return enemy;
+            }
+        }
 
-    //    GameObject newEnemy = Instantiate(enemyObject);
-    //    enemyPool.Add(newEnemy);
-    //    return newEnemy;
-    //}
-
+        // If no inactive enemies found, create new ones
+        GameObject newEnemy = Instantiate(enemyObject);
+        enemyPool.Add(newEnemy);
+        return newEnemy;
+    }
 }

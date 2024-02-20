@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [Header("Health values")]
     private float health;
     public float maxHealth = 100f;
+    public bool isDead;
 
     // Debugging
     [SerializeField]
@@ -43,6 +44,11 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         health = maxHealth;
+
+        // Get enemy from object pool
+        GameObject pooledEnemy = ObjectPoolManager.instance.GetEnemy();
+        transform.position = pooledEnemy.transform.position;
+        transform.rotation = pooledEnemy.transform.rotation;
     }
 
     // Update is called once per frame
@@ -93,6 +99,8 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy should be dead.");
             // Death animations and logic here.
 
+            isDead = true;
+            stateMachine.ChangeState(new DeathState());
         }
     }
 }

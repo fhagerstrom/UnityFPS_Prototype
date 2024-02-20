@@ -25,6 +25,10 @@ public class AttackState : BaseState
 
     public override void Perform()
     {
+        // Don't perform anything if the enemy is dead
+        if(enemy.isDead) 
+            return;
+
         if(enemy.PlayerInSight())
         {
             // Lock lose timer, increment other timers
@@ -65,7 +69,7 @@ public class AttackState : BaseState
         {
             losePlayerTimer += Time.deltaTime;
 
-            if(losePlayerTimer > 8) 
+            if(losePlayerTimer > 5) 
             {
                 // Player lost, enter search state
                 stateMachine.ChangeState(new SearchState());
@@ -95,7 +99,7 @@ public class AttackState : BaseState
         Debug.Log("AI Shooting!");
 
         shotTimer = 0;
-        returnBulletTimer = 1.0f;
+        returnBulletTimer = 1.5f;
 
     }
 

@@ -31,7 +31,7 @@ public class SearchState : BaseState
                 moveTimer = 0;
             }
 
-            if (searchTimer > Random.Range(3, 10))
+            if (searchTimer > Random.Range(3, 8))
             {
                 stateMachine.ChangeState(new PatrolState());
             }
