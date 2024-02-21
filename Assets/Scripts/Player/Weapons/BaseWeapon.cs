@@ -10,7 +10,7 @@ public class BaseWeapon : MonoBehaviour
     [SerializeField]
     protected float raycastRange = 50f;
     protected float fireRateCooldown = 0f;
-    protected float fireRate = 0.5f;
+    protected float fireRate = 0.2f;
 
     protected int maxBullets = 9;
     protected int currentBulletsLeft = 9;
