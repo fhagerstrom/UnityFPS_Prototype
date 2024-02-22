@@ -12,10 +12,10 @@ public class BaseWeapon : MonoBehaviour
     protected float fireRateCooldown = 0f;
     protected float fireRate = 0.2f;
 
-    protected int maxBullets = 9;
-    protected int currentBulletsLeft = 9;
-    protected int maxReserveAmmo = 81;
-    protected int currentReserveAmmo = 81;
+    public int maxBullets = 9;
+    public int currentBulletsLeft = 9;
+    public int maxReserveAmmo = 81;
+    public int currentReserveAmmo = 81;
     protected float damage = 20f;
 
     [SerializeField]
@@ -37,6 +37,8 @@ public class BaseWeapon : MonoBehaviour
 
     protected AudioSource weaponAudioSource;
 
+    protected PlayerAmmo playerAmmo;
+
     private void Start()
     {
         // Initializing weapon properties in their own classes. E.g  currentBulletsLeft in MagSecPistol
@@ -45,6 +47,8 @@ public class BaseWeapon : MonoBehaviour
         weaponAudioSource = gameObject.AddComponent<AudioSource>();
         weaponAudioSource.playOnAwake = false;
         weaponAudioSource.volume = 0.15f;
+
+        playerAmmo = GetComponent<PlayerAmmo>();
 
     }
 
@@ -58,20 +62,17 @@ public class BaseWeapon : MonoBehaviour
 
     public void OnShoot()
     {
-        // GetComponent<WeaponEvents>().OnShoot.Invoke();
         Shoot();
     }
 
     public void OnReload()
     {
-        // GetComponent<WeaponEvents>().OnReload.Invoke();
         Reload();
     }
 
     public void OnEnemyHit(float damage)
     {
         Debug.Log("Incoming damage: " + damage);
-        // GetComponent<WeaponEvents>().OnEnemyHit.Invoke(damage);
         enemy.TakeDamage(damage);
     }
 
@@ -164,6 +165,8 @@ public class BaseWeapon : MonoBehaviour
                 weaponAudioSource.clip = reloadSound;
                 weaponAudioSource.Play();
             }
+
+            playerAmmo.UpdateAmmoUI();
         }
     }
 }

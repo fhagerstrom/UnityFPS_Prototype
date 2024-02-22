@@ -24,7 +24,6 @@ public class PlayerManager : MonoBehaviour
         weaponManager = GetComponent<WeaponManager>();
 
         onFoot.Crouch.performed += ctx => motor.Crouch();
-        // onFoot.Jump.performed += ctx => motor.Jump();
         onFoot.Fire.performed += ctx => Shoot();
         onFoot.Reload.performed += ctx => Reload();
         onFoot.SwitchWeapon.performed += ctx => SwitchWeapon();
