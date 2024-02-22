@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Pistol
   - Shotgun
-  - Agent
+  - Enemy
   layers:
   - Default
   - TransparentFX

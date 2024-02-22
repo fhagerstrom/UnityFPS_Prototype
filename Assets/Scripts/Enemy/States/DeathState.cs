@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class DeathState : BaseState
 {
-    GameObject agentObject;
-    private float destructionTimer = 1.25f; // Adjust timer to anmimation
+    private float destructionTimer; // Adjust timer to anmimation
 
     public override void Enter()
     {
-        agentObject = GameObject.FindGameObjectWithTag("Agent");
-
-        if (agentObject != null)
-            agentObject.GetComponent<Animator>().SetTrigger("DeathTrigger");
-
-        // Start destruction timer
-        destructionTimer = 1.25f;
+        // Set and start destruction timer
+        destructionTimer = 0.75f;
     }
 
     public override void Exit()
@@ -25,7 +19,7 @@ public class DeathState : BaseState
 
     public override void Perform()
     {
-        // Update the destruction timer
+        // Update destruction timer
         destructionTimer -= Time.deltaTime;
 
         if (destructionTimer <= 0)

@@ -78,6 +78,9 @@ public class PdShotgun : BaseWeapon
                         totalDamage += damage;
                         // Apply damage
                         OnEnemyHit(totalDamage);
+
+                        if (enemy.GetEnemyHealth() <= 0)
+                            hitInfo.collider.gameObject.GetComponent<Animation>().Play();
                     }
 
                     // Debug.DrawRay(playerCam.transform.position, shotDirection, Color.green, raycastRange);
@@ -98,7 +101,7 @@ public class PdShotgun : BaseWeapon
             if (currentBulletsLeft == 0)
             {
                 OnReload();
-                Debug.Log("YOU NEED MORE BULLETS! INVOKING RELOAD!");
+                Debug.Log("NO BULLETS LEFT IN MAG!");
             }
         }
     }

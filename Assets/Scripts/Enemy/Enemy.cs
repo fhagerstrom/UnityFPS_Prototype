@@ -92,10 +92,14 @@ public class Enemy : MonoBehaviour
         if(health <= 0)
         {
             Debug.Log("Enemy should be dead.");
-            // Death animations and logic here.
 
             isDead = true;
-            stateMachine.ChangeState(new DeathState());
+            stateMachine.ChangeState(new DeathState()); // Play death animation and set inactive
         }
+    }
+
+    public float GetEnemyHealth()
+    {
+        return health;
     }
 }

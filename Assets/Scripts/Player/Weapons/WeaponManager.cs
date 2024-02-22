@@ -1,12 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class WeaponManager : MonoBehaviour
 {
-    public List<BaseWeapon> weapons;
     public BaseWeapon equippedWeapon;
 
     private MagSecPistol magSecPistol;

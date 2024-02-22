@@ -37,7 +37,7 @@ public class BaseWeapon : MonoBehaviour
 
     protected AudioSource weaponAudioSource;
 
-    protected PlayerAmmo playerAmmo;
+    public PlayerAmmo playerAmmo;
 
     private void Start()
     {
@@ -98,6 +98,9 @@ public class BaseWeapon : MonoBehaviour
                         Debug.Log("Hit enemy!");
                         // Apply damage
                         OnEnemyHit(damage);
+
+                        if(enemy.GetEnemyHealth() <= 0)
+                            hitInfo.collider.gameObject.GetComponent<Animation>().Play();
                     }
 
                     // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
@@ -119,9 +122,8 @@ public class BaseWeapon : MonoBehaviour
                 if (currentBulletsLeft == 0)
                 {
                     OnReload();
-                    Debug.Log("YOU NEED MORE BOULETS! INVOKING RELOAD!");
+                    Debug.Log("NO BULLETS LEFT IN MAG!");
                 }
-
             }
         }
     }
@@ -136,7 +138,6 @@ public class BaseWeapon : MonoBehaviour
                 canShoot = true;
                 startReloadTimer = false;
                 reloadTimer = reloadTimerCooldown;
-                Debug.Log("Reload complete! Current bullets maxed, which is: " + currentBulletsLeft);
             }
         }
     }
@@ -150,23 +151,21 @@ public class BaseWeapon : MonoBehaviour
             startReloadTimer = true;
             Debug.Log("RELOADINGNGNGNGNG");
 
-            // Check for ammo capacity
-            if (currentReserveAmmo < maxBullets)
-            {
-                currentBulletsLeft = currentReserveAmmo;
-            }
+            // Top up bullets
+            int bulletsToReload = Mathf.Min(maxBullets - currentBulletsLeft, currentReserveAmmo);
 
-            currentReserveAmmo -= (maxBullets - currentBulletsLeft);
+            // Update bullets and reserve ammo
+            currentBulletsLeft += bulletsToReload;
+            currentReserveAmmo -= bulletsToReload;
+
             Debug.Log("Reload update - Current reserve ammo: " + currentReserveAmmo);
-            currentBulletsLeft = maxBullets;
+            Debug.Log("Reload update - Current bullets left: " + currentBulletsLeft);
 
             if (reloadSound != null)
             {
                 weaponAudioSource.clip = reloadSound;
                 weaponAudioSource.Play();
             }
-
-            playerAmmo.UpdateAmmoUI();
         }
     }
 }
