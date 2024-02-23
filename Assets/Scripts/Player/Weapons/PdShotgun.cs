@@ -8,6 +8,8 @@ public class PdShotgun : BaseWeapon
     private AudioClip shotgunShootSfx;
     [SerializeField]
     private AudioClip shotgunReloadSfx;
+    [SerializeField]
+    private AudioClip shotgunClickSfx;
 
     // Define a blast cone by shooting x amount of rays from camera when shotgun is used
     private Vector3[] blastCone = new Vector3[]
@@ -29,13 +31,14 @@ public class PdShotgun : BaseWeapon
         reloadTimer = reloadTimerCooldown;
 
         maxBullets = 9;
-        maxReserveAmmo = 18;
+        maxReserveAmmo = 9;
         currentBulletsLeft = maxBullets;
         currentReserveAmmo = maxReserveAmmo;
         damage = 25f;
 
         shootSound = shotgunShootSfx;
         reloadSound = shotgunReloadSfx;
+        gunClickSound = shotgunClickSfx;
     }
 
     // Update is called once per frame
@@ -58,50 +61,56 @@ public class PdShotgun : BaseWeapon
     {
         if (canShoot && fireRateCooldown <= 0)
         {
-            float totalDamage = 0f;
-            foreach (var spreadAngles in blastCone)
+            if (currentBulletsLeft > 0)
             {
-                Vector3 shotDirection = playerCam.transform.forward;
-                shotDirection = Quaternion.Euler(spreadAngles) * shotDirection;
-
-                RaycastHit hitInfo;
-                bool raycastHit = Physics.Raycast(playerCam.transform.position, shotDirection, out hitInfo, raycastRange);
-
-                if (raycastHit)
+                float totalDamage = 0f;
+                foreach (var spreadAngles in blastCone)
                 {
-                    enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+                    Vector3 shotDirection = playerCam.transform.forward;
+                    shotDirection = Quaternion.Euler(spreadAngles) * shotDirection;
 
-                    if (enemy != null)
+                    RaycastHit hitInfo;
+                    bool raycastHit = Physics.Raycast(playerCam.transform.position, shotDirection, out hitInfo, raycastRange);
+
+                    if (raycastHit)
                     {
-                        Debug.Log("Hit enemy!");
-                        // Add damage based on how many rays hit
-                        totalDamage += damage;
-                        // Apply damage
-                        OnEnemyHit(totalDamage);
+                        enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
 
-                        if (enemy.GetEnemyHealth() <= 0)
-                            hitInfo.collider.gameObject.GetComponent<Animation>().Play();
+                        if (enemy != null)
+                        {
+                            Debug.Log("Hit enemy!");
+                            // Add damage based on how many rays hit
+                            totalDamage += damage;
+                            // Apply damage
+                            OnEnemyHit(totalDamage);
+
+                            if (enemy.GetEnemyHealth() <= 0)
+                                hitInfo.collider.gameObject.GetComponent<Animation>().Play();
+                        }
                     }
+                }
 
-                    // Debug.DrawRay(playerCam.transform.position, shotDirection, Color.green, raycastRange);
+                // Sounds
+                if (shootSound != null)
+                {
+                    weaponAudioSource.clip = shootSound;
+                    weaponAudioSource.Play();
+                }
+
+                currentBulletsLeft--;
+                fireRateCooldown = fireRate;
+
+                if (currentBulletsLeft == 0)
+                {
+                    OnReload();
                 }
             }
 
-            // Sounds
-            if (shootSound != null)
+            // No ammo left at all
+            else
             {
-                weaponAudioSource.clip = shootSound;
+                weaponAudioSource.clip = gunClickSound;
                 weaponAudioSource.Play();
-            }
-
-            currentBulletsLeft--;
-            fireRateCooldown = fireRate;
-            Debug.Log("Current bullets left: " + currentBulletsLeft);
-
-            if (currentBulletsLeft == 0)
-            {
-                OnReload();
-                Debug.Log("NO BULLETS LEFT IN MAG!");
             }
         }
     }

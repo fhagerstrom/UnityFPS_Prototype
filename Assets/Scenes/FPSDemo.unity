@@ -701,9 +701,9 @@ MonoBehaviour:
   playerCam: {fileID: 851025933}
   canShoot: 1
   startReloadTimer: 0
-  playerAmmo: {fileID: 0}
   magSecShootSfx: {fileID: 8300000, guid: 3b052d3b33bbd9c47b6491681c67772b, type: 3}
   magSecReloadSfx: {fileID: 8300000, guid: e2ef137f95f398843b7be7035c41fcab, type: 3}
+  magSecClickSfx: {fileID: 0}
 --- !u!1 &101375301
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +813,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 170, y: 0}
+  m_AnchoredPosition: {x: 250, y: 0}
   m_SizeDelta: {x: 600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120381852
@@ -1532,9 +1532,9 @@ MonoBehaviour:
   playerCam: {fileID: 851025933}
   canShoot: 1
   startReloadTimer: 0
-  playerAmmo: {fileID: 0}
   shotgunShootSfx: {fileID: 8300000, guid: 54f60cd75b718eb48af21d3c380ba0f4, type: 3}
   shotgunReloadSfx: {fileID: 8300000, guid: 6068ce5d560c056498351b9a4d09080c, type: 3}
+  shotgunClickSfx: {fileID: 0}
 --- !u!1 &379061412
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,16 +3118,16 @@ MonoBehaviour:
   raycastRange: 50
   maxBullets: 9
   currentBulletsLeft: 9
-  maxReserveAmmo: 81
+  maxReserveAmmo: 54
   currentReserveAmmo: 81
   reloadTimer: 1.5
   inaccuracyAngle: 1
   playerCam: {fileID: 851025933}
   canShoot: 1
   startReloadTimer: 0
-  playerAmmo: {fileID: 0}
   magSecShootSfx: {fileID: 8300000, guid: 3b052d3b33bbd9c47b6491681c67772b, type: 3}
   magSecReloadSfx: {fileID: 8300000, guid: e2ef137f95f398843b7be7035c41fcab, type: 3}
+  magSecClickSfx: {fileID: 8300000, guid: b2397a578c17e5f498b83e9f6c87a0b6, type: 3}
 --- !u!1001 &706228313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4014,19 +4014,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.42853814
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0.9035237
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4034,7 +4034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 129.25
       objectReference: {fileID: 0}
     - target: {fileID: 4336362469858380044, guid: 93d9086e78fb0a04082b18dd605b9c01, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -5005,16 +5005,16 @@ MonoBehaviour:
   raycastRange: 20
   maxBullets: 9
   currentBulletsLeft: 9
-  maxReserveAmmo: 81
+  maxReserveAmmo: 0
   currentReserveAmmo: 81
   reloadTimer: 1.8
   inaccuracyAngle: 1
   playerCam: {fileID: 851025933}
   canShoot: 1
   startReloadTimer: 0
-  playerAmmo: {fileID: 0}
   shotgunShootSfx: {fileID: 8300000, guid: 54f60cd75b718eb48af21d3c380ba0f4, type: 3}
   shotgunReloadSfx: {fileID: 8300000, guid: 6068ce5d560c056498351b9a4d09080c, type: 3}
+  shotgunClickSfx: {fileID: 8300000, guid: b2397a578c17e5f498b83e9f6c87a0b6, type: 3}
 --- !u!1 &1311752818
 GameObject:
   m_ObjectHideFlags: 0

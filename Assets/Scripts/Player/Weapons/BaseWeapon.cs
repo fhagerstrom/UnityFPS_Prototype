@@ -12,8 +12,8 @@ public class BaseWeapon : MonoBehaviour
 
     public int maxBullets = 9;
     public int currentBulletsLeft = 9;
-    public int maxReserveAmmo = 81;
-    public int currentReserveAmmo = 81;
+    public int maxReserveAmmo = 54;
+    public int currentReserveAmmo = 54;
     protected float damage = 20f;
 
     [SerializeField]
@@ -32,10 +32,9 @@ public class BaseWeapon : MonoBehaviour
     [Header("Audio")]
     protected AudioClip shootSound;
     protected AudioClip reloadSound;
+    protected AudioClip gunClickSound;
 
     protected AudioSource weaponAudioSource;
-
-    public PlayerAmmo playerAmmo;
 
     private void Start()
     {
@@ -45,9 +44,6 @@ public class BaseWeapon : MonoBehaviour
         weaponAudioSource = gameObject.AddComponent<AudioSource>();
         weaponAudioSource.playOnAwake = false;
         weaponAudioSource.volume = 0.15f;
-
-        playerAmmo = GetComponent<PlayerAmmo>();
-
     }
 
     public virtual void Update()
@@ -77,7 +73,6 @@ public class BaseWeapon : MonoBehaviour
     {
         if (canShoot && fireRateCooldown <= 0)
         {
-            // Debug.Log("Firing weapon!");
             if (currentBulletsLeft > 0)
             {
                 // Testing random inaccuracy
@@ -96,12 +91,9 @@ public class BaseWeapon : MonoBehaviour
                         // Apply damage
                         OnEnemyHit(damage);
 
-                        if(enemy.GetEnemyHealth() <= 0)
+                        if (enemy.GetEnemyHealth() <= 0)
                             hitInfo.collider.gameObject.GetComponent<Animation>().Play();
                     }
-
-                    // Debug.DrawRay(playerCam.transform.position, playerCam.transform.forward, Color.green, raycastRange);
-
                 }
 
                 // Sounds
@@ -109,7 +101,6 @@ public class BaseWeapon : MonoBehaviour
                 {
                     weaponAudioSource.clip = shootSound;
                     weaponAudioSource.Play();
-                    weaponAudioSource.volume = 0.1f;
                 }
 
                 currentBulletsLeft--;
@@ -119,6 +110,13 @@ public class BaseWeapon : MonoBehaviour
                 {
                     OnReload();
                 }
+            }
+
+            // No ammo left at all
+            else
+            {
+                weaponAudioSource.clip = gunClickSound;
+                weaponAudioSource.Play();
             }
         }
     }

@@ -8,6 +8,8 @@ public class MagSecPistol : BaseWeapon
     private AudioClip magSecShootSfx;
     [SerializeField]
     private AudioClip magSecReloadSfx;
+    [SerializeField]
+    private AudioClip magSecClickSfx;
 
 
     // Awake is called before the first frame update
@@ -19,6 +21,7 @@ public class MagSecPistol : BaseWeapon
         // Assign audio clips
         shootSound = magSecShootSfx;
         reloadSound = magSecReloadSfx;
+        gunClickSound = magSecClickSfx;
     }
 
     // Update is called once per frame
