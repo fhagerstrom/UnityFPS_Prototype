@@ -27,6 +27,6 @@ public class PlayerUI : MonoBehaviour
             weaponText.text = string.Empty;
 
         else
-            weaponText.text = weaponManager.equippedWeapon.ToString();
+            weaponText.text = weaponManager.equippedWeapon.name;
     }
 }

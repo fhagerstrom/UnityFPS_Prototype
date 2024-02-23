@@ -12,11 +12,11 @@ public class PdShotgun : BaseWeapon
     // Define a blast cone by shooting x amount of rays from camera when shotgun is used
     private Vector3[] blastCone = new Vector3[]
     {
-        new Vector3(-10f, -10f, 0),
         new Vector3(-5f, -5f, 0),
+        new Vector3(-2.5f, -2.5f, 0),
         new Vector3(0, 0, 0),
+        new Vector3(2.5f, 2.5f, 0),
         new Vector3(5f, 5f, 0),
-        new Vector3(10f, 10f, 0),
     };
 
     // Awake is called before the first frame update

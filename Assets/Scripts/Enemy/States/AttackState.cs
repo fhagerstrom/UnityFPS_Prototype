@@ -94,7 +94,7 @@ public class AttackState : BaseState
         Vector3 shootDirection = (enemy.Player.transform.position - gunBarrel.transform.position).normalized;
         // Add force to rigidbody component.
         // Random is used to add "spread" / inaccuracy to the shooting
-        bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-3f, 3f), Vector3.up) * shootDirection * bulletVelocity;
+        bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-1.5f, 1.5f), Vector3.up) * shootDirection * bulletVelocity;
 
         Debug.Log("AI Shooting!");
 

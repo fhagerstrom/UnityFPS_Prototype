@@ -1,6 +1,4 @@
-using TMPro.EditorUtilities;
 using UnityEngine;
-using UnityEngine.Events;
 
 // Base class weapon, holds all base info on bullets, sounds and reload logic
 public class BaseWeapon : MonoBehaviour
@@ -72,7 +70,6 @@ public class BaseWeapon : MonoBehaviour
 
     public void OnEnemyHit(float damage)
     {
-        Debug.Log("Incoming damage: " + damage);
         enemy.TakeDamage(damage);
     }
 
@@ -117,12 +114,10 @@ public class BaseWeapon : MonoBehaviour
 
                 currentBulletsLeft--;
                 fireRateCooldown = fireRate;
-                Debug.Log("Current bullets left: " + currentBulletsLeft);
 
                 if (currentBulletsLeft == 0)
                 {
                     OnReload();
-                    Debug.Log("NO BULLETS LEFT IN MAG!");
                 }
             }
         }
@@ -149,7 +144,6 @@ public class BaseWeapon : MonoBehaviour
         {
             canShoot = false;
             startReloadTimer = true;
-            Debug.Log("RELOADINGNGNGNGNG");
 
             // Top up bullets
             int bulletsToReload = Mathf.Min(maxBullets - currentBulletsLeft, currentReserveAmmo);
@@ -157,9 +151,6 @@ public class BaseWeapon : MonoBehaviour
             // Update bullets and reserve ammo
             currentBulletsLeft += bulletsToReload;
             currentReserveAmmo -= bulletsToReload;
-
-            Debug.Log("Reload update - Current reserve ammo: " + currentReserveAmmo);
-            Debug.Log("Reload update - Current bullets left: " + currentBulletsLeft);
 
             if (reloadSound != null)
             {

@@ -4,7 +4,7 @@ using TMPro;
 
 public class PlayerAmmo : MonoBehaviour
 {
-    public WeaponManager weaponManager;
+    private WeaponManager weaponManager;
     public TextMeshProUGUI ammoText;
 
     // Start is called before the first frame update
@@ -12,7 +12,7 @@ public class PlayerAmmo : MonoBehaviour
     {
         weaponManager = GetComponent<WeaponManager>();
 
-        // If the player doesn't have weapon. Set text to have 0 ammo.
+        // If the player doesn't have a weapon equipped. Set text to 0 ammo.
         if(weaponManager.equippedWeapon == null)
             ammoText.text = "0 / 0";
     }

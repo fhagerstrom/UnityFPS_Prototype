@@ -49,8 +49,11 @@ public class ObjectPoolManager : MonoBehaviour
     {
         foreach (GameObject bullet in bulletPool)
         {
-            bullet.SetActive(true);
-            return bullet;
+            if (!bullet.activeSelf)
+            {
+                bullet.SetActive(true);
+                return bullet;
+            }
         }
 
         // If no inactive bullets found, create new ones

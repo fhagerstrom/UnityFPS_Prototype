@@ -77,8 +77,6 @@ public class PlayerManager : MonoBehaviour
             weaponManager.pdShotgunObject.SetActive(false);
 
             weaponManager.equippedWeapon = weaponManager.magSecPistolObject.GetComponent<MagSecPistol>();
-
-            Debug.Log("Switched weapon to: " + weaponManager.magSecPistolObject);
         }
 
         else if (!weaponManager.pdShotgunObject.activeSelf && weaponManager.pickedUpShotgun == true)
@@ -87,8 +85,6 @@ public class PlayerManager : MonoBehaviour
             weaponManager.magSecPistolObject.SetActive(false);
 
             weaponManager.equippedWeapon = weaponManager.pdShotgunObject.GetComponent<PdShotgun>();
-
-            Debug.Log("Switched weapon to: " + weaponManager.pdShotgunObject);
         }
     }
 
