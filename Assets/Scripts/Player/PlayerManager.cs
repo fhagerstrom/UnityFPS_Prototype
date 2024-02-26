@@ -33,16 +33,12 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
 
         if (weaponManager.equippedWeapon != null)
         {
             weaponManager.equippedWeapon.HandleReloadTimer();
         }
-    }
-
-    private void FixedUpdate()
-    {
-        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
 
     private void OnEnable()

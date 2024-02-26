@@ -92,7 +92,9 @@ public class BaseWeapon : MonoBehaviour
                         OnEnemyHit(damage);
 
                         if (enemy.GetEnemyHealth() <= 0)
+                        {
                             hitInfo.collider.gameObject.GetComponent<Animation>().Play();
+                        }
                     }
                 }
 

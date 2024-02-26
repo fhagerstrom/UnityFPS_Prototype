@@ -85,7 +85,9 @@ public class PdShotgun : BaseWeapon
                             OnEnemyHit(totalDamage);
 
                             if (enemy.GetEnemyHealth() <= 0)
+                            {
                                 hitInfo.collider.gameObject.GetComponent<Animation>().Play();
+                            }
                         }
                     }
                 }

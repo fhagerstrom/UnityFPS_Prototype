@@ -25,8 +25,11 @@ public class DeathState : BaseState
         if (destructionTimer <= 0)
         {
             if (enemy != null)
+            {
                 // Set enemy gameobject to inactive
                 enemy.gameObject.SetActive(false);
+                GameManager.instance.DecreaseEnemiesRemaining();
+            }
 
             else
                 Debug.LogError("Enemy is null in DeathState");
