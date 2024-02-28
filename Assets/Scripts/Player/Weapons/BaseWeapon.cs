@@ -9,12 +9,11 @@ public class BaseWeapon : MonoBehaviour
     protected float raycastRange = 50f;
     protected float fireRateCooldown = 0f;
     protected float fireRate = 0.2f;
-
     public int maxBullets = 9;
     public int currentBulletsLeft = 9;
     public int maxReserveAmmo = 54;
     public int currentReserveAmmo = 54;
-    protected float damage = 20f;
+    protected float damage = 25f;
 
     [SerializeField]
     protected float reloadTimer;
@@ -36,6 +35,9 @@ public class BaseWeapon : MonoBehaviour
 
     protected AudioSource weaponAudioSource;
 
+    [SerializeField]
+    protected ParticleSystem muzzleFlash;
+
     private void Start()
     {
         // Initializing weapon properties in their own classes. E.g  currentBulletsLeft in MagSecPistol
@@ -43,7 +45,7 @@ public class BaseWeapon : MonoBehaviour
         // Audio setup
         weaponAudioSource = gameObject.AddComponent<AudioSource>();
         weaponAudioSource.playOnAwake = false;
-        weaponAudioSource.volume = 0.15f;
+        weaponAudioSource.volume = 0.1f;
     }
 
     public virtual void Update()
@@ -75,6 +77,8 @@ public class BaseWeapon : MonoBehaviour
         {
             if (currentBulletsLeft > 0)
             {
+                muzzleFlash.Play();
+
                 // Testing random inaccuracy
                 Vector3 shotDirection = playerCam.transform.forward;
                 shotDirection = Quaternion.Euler(Random.Range(-inaccuracyAngle, inaccuracyAngle), Random.Range(-inaccuracyAngle, inaccuracyAngle), 0) * shotDirection;

@@ -63,6 +63,8 @@ public class PdShotgun : BaseWeapon
         {
             if (currentBulletsLeft > 0)
             {
+                muzzleFlash.Play();
+
                 float totalDamage = 0f;
                 foreach (var spreadAngles in blastCone)
                 {
