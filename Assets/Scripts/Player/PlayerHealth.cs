@@ -89,6 +89,7 @@ public class PlayerHealth : MonoBehaviour
         {
             // Player is dead. Pause game and switch to game over sequence
             GameManager.instance.isGameRunning = false;
+            Time.timeScale = 0f;
         }
     }
 

@@ -11,14 +11,14 @@ public class PlayerInteract : MonoBehaviour
     public LayerMask mask;
     private PlayerUI playerUI;
 
-    private PlayerManager inputManager;
+    private PlayerManager playerManager;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<PlayerLook>().cam;
         playerUI = GetComponent<PlayerUI>();
-        inputManager = GetComponent<PlayerManager>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     // Update is called once per frame
@@ -42,7 +42,7 @@ public class PlayerInteract : MonoBehaviour
             {
                 Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
                 playerUI.UpdateText(interactable.promptMsg);
-                if (inputManager.onFoot.Interact.triggered)
+                if (playerManager.onFoot.Interact.triggered)
                 {
                     Debug.Log("Interacted with something interactable!");
                     interactable.BaseInteract();

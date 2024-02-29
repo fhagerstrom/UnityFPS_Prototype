@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private IEnumerator UpdateTimer()
@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
             {
                 // GAME OVER
                 Debug.Log("TIME'S UP! GAME OVER!");
+                Time.timeScale = 0;
                 isGameRunning = false;
             }
         }
@@ -81,13 +82,37 @@ public class GameManager : MonoBehaviour
         {
             // WIN CONDITION
             Debug.Log("MISSION COMPLETE");
+            Time.timeScale = 0;
             isGameRunning = false;
         }
 
         UpdateUI();
     }
 
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        isGameRunning = false;
+    }
 
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        isGameRunning = true;
+    }
+
+    public void ChangeGameState()
+    {
+        if (isGameRunning)
+        {
+            PauseGame();
+        }
+
+        else
+        {
+            ResumeGame();
+        }
+    }
 
     // Consider adding an increase function if the number of enemies should be handled dynamically e.g
     // public void IncreaseEnemiesRemaining();

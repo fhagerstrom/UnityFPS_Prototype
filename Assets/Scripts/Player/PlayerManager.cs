@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
         onFoot.Fire.performed += ctx => Shoot();
         onFoot.Reload.performed += ctx => Reload();
         onFoot.SwitchWeapon.performed += ctx => SwitchWeapon();
+        onFoot.Pause.performed += ctx => GameManager.instance.ChangeGameState();
     }
 
     // Update is called once per frame

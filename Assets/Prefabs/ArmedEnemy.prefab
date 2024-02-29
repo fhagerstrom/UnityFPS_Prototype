@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4648889643817902466}
   - component: {fileID: 8650612360683832194}
   - component: {fileID: 1272285773453655213}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3328782236824240878}
   - component: {fileID: 3465429704024843992}
   - component: {fileID: 4134075332717889323}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Brow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4527361100778166298}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Meshes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 8443043985754072153}
   - component: {fileID: 208432578751670536}
   - component: {fileID: 5774085664323741280}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 6531915526955968898}
   - component: {fileID: 8865634911092851192}
   - component: {fileID: 6126516247312612490}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 1001816108995696505}
   - component: {fileID: 3114994164294061210}
   - component: {fileID: 8406411036995210175}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Brow (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 6194172914016055900}
   - component: {fileID: 1286553622591089970}
   - component: {fileID: 7989437066907874876}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FalconPistolSmoothed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +581,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5239790943918305846}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.6
+  m_Radius: 1.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -674,7 +674,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6206392322291722493}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Agent
   m_TagString: Agent
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 6518505062628593939}
   - component: {fileID: 3399751596076512616}
   - component: {fileID: 694865265105058024}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -791,7 +791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6819797699282535457}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
