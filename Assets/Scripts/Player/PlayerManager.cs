@@ -50,6 +50,7 @@ public class PlayerManager : MonoBehaviour
     private void OnDisable()
     {
         onFoot.Disable();
+        
     }
 
     // Handle shooting

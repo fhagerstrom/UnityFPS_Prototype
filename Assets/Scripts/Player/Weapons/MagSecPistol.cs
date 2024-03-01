@@ -11,7 +11,6 @@ public class MagSecPistol : BaseWeapon
     [SerializeField]
     private AudioClip magSecClickSfx;
 
-
     // Awake is called before the first frame update
     void Awake()
     {
@@ -40,7 +39,15 @@ public class MagSecPistol : BaseWeapon
     public override void Reload()
     {
         base.Reload();
+    }
 
+    public int GetCurrentBulletsLeft()
+    {
+        return currentBulletsLeft;
+    }
 
+    public int GetCurrentReserveAmmo()
+    {
+        return currentReserveAmmo;
     }
 }

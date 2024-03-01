@@ -124,4 +124,14 @@ public class PdShotgun : BaseWeapon
         base.Reload();
     }
 
+    public int GetCurrentBulletsLeft()
+    {
+        return currentBulletsLeft;
+    }
+
+    public int GetCurrentReserveAmmo()
+    {
+        return currentReserveAmmo;
+    }
+
 }

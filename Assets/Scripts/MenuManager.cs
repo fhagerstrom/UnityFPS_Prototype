@@ -6,6 +6,7 @@ public class MenuManager : MonoBehaviour
 {
     public void PlayGame()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("FPSDemo");
     }
 
@@ -17,6 +18,7 @@ public class MenuManager : MonoBehaviour
 
     public void LoadMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
 }

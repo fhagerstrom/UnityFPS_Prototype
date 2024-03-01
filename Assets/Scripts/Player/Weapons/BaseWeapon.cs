@@ -38,6 +38,9 @@ public class BaseWeapon : MonoBehaviour
     [SerializeField]
     protected ParticleSystem muzzleFlash;
 
+    [SerializeField]
+    protected Animation reloadAnimation;
+
     private void Start()
     {
         // Initializing weapon properties in their own classes. E.g  currentBulletsLeft in MagSecPistol
@@ -146,6 +149,7 @@ public class BaseWeapon : MonoBehaviour
         // Only enter Reload function if we have reserve ammo left and the weapon has shot at least once
         if (currentReserveAmmo > 0 && (currentBulletsLeft < maxBullets))
         {
+            reloadAnimation.Play();
             canShoot = false;
             startReloadTimer = true;
 

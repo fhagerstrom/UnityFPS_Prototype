@@ -87,9 +87,13 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            // Player is dead. Pause game and switch to game over sequence
-            GameManager.instance.isGameRunning = false;
+            // Player is dead. Pause game and switch to lost state
             Time.timeScale = 0f;
+            GameManager.instance.playerUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            GameManager.instance.player.GetComponent<PlayerManager>().onFoot.Disable();
+            GameManager.instance.SetGameState(GameManager.GameState.LOST);
         }
     }
 

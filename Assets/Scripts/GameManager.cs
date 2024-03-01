@@ -13,22 +13,45 @@ public class GameManager : MonoBehaviour
     private int totalEnemies;
     private int enemiesRemaining;
 
-    public bool isGameRunning = true; // Game is running
+    public enum GameState
+    {
+        RUNNING,
+        PAUSED,
+        WON,
+        LOST
+    }
+
+    public GameState currentState;
 
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI objectiveText;
+    public TextMeshProUGUI pointsText;
+
+    public WeaponManager playerWeapon;
+
+    public GameObject player;
+    public GameObject playerUI;
+    public GameObject winScreen;
+    public GameObject loseScreen;
+    public GameObject pauseScreen;
 
     // Start is called before the first frame update
     void Start()
     {
+        currentState = GameState.RUNNING;
+        playerUI.SetActive(true);
+
+        // Get player weapon for calculating points
+        if(playerWeapon != null)
+        {
+            playerWeapon = player.GetComponent<WeaponManager>();
+        }
+
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
-
-        else
-            Destroy(gameObject);
 
         CountTotalEnemies();
 
@@ -46,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator UpdateTimer()
     {
-        while (currentTime > 0 && isGameRunning)
+        while (currentTime > 0 && currentState == GameState.RUNNING)
         {
             yield return new WaitForSeconds(1f);
             currentTime -= 1f;
@@ -55,9 +78,13 @@ public class GameManager : MonoBehaviour
             if(currentTime <= 0f)
             {
                 // GAME OVER
-                Debug.Log("TIME'S UP! GAME OVER!");
+                Debug.Log("TIME'S UP!");
                 Time.timeScale = 0;
-                isGameRunning = false;
+                playerUI.SetActive(false);
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                SetGameState(GameState.LOST);
+                
             }
         }
     }
@@ -81,9 +108,19 @@ public class GameManager : MonoBehaviour
         if(enemiesRemaining <= 0)
         {
             // WIN CONDITION
+            float healthPoints = player.GetComponent<PlayerHealth>().GetPlayerHealth();
+            float timePoints = currentTime;
+            float ammoPoints = playerWeapon.GetComponent<MagSecPistol>().GetCurrentBulletsLeft() + playerWeapon.GetComponent<PdShotgun>().GetCurrentReserveAmmo();
+
+            float totalPoints = (healthPoints * timePoints) + ammoPoints;
+
             Debug.Log("MISSION COMPLETE");
+            pointsText.text = "Points: " + totalPoints.ToString("0"); // 0 is used to ensure not displaying decimals
             Time.timeScale = 0;
-            isGameRunning = false;
+            playerUI.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SetGameState(GameState.WON);
         }
 
         UpdateUI();
@@ -92,18 +129,26 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        isGameRunning = false;
+        playerUI.SetActive(false);
+        player.GetComponent<PlayerManager>().onFoot.Disable();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SetGameState(GameState.PAUSED);
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
-        isGameRunning = true;
+        playerUI.SetActive(true);
+        player.GetComponent<PlayerManager>().onFoot.Enable();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        SetGameState(GameState.RUNNING);
     }
 
     public void ChangeGameState()
     {
-        if (isGameRunning)
+        if (currentState == GameState.RUNNING)
         {
             PauseGame();
         }
@@ -114,7 +159,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Consider adding an increase function if the number of enemies should be handled dynamically e.g
-    // public void IncreaseEnemiesRemaining();
+    public void SetGameState(GameState newState)
+    {
+        currentState = newState;
 
+        // Set UI visibility depending on game state
+        winScreen.SetActive(currentState == GameState.WON);
+        loseScreen.SetActive(currentState == GameState.LOST);
+        pauseScreen.SetActive(currentState == GameState.PAUSED);
+    }
 }
