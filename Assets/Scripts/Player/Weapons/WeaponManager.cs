@@ -6,8 +6,8 @@ public class WeaponManager : MonoBehaviour
 {
     public BaseWeapon equippedWeapon;
 
-    private MagSecPistol magSecPistol;
-    private PdShotgun pdShotgun;
+    public MagSecPistol magSecPistol;
+    public PdShotgun pdShotgun;
 
     public GameObject magSecPistolObject;
     public GameObject pdShotgunObject;

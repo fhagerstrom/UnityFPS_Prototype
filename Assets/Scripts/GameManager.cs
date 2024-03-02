@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour
     private int totalEnemies;
     private int enemiesRemaining;
 
+    private float healthPoints;
+    private float timePoints;
+    private float ammoPoints;
+
     public enum GameState
     {
         RUNNING,
@@ -27,7 +31,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI objectiveText;
     public TextMeshProUGUI pointsText;
 
-    public WeaponManager playerWeapon;
+    public WeaponManager weaponManager;
 
     public GameObject player;
     public GameObject playerUI;
@@ -41,10 +45,15 @@ public class GameManager : MonoBehaviour
         currentState = GameState.RUNNING;
         playerUI.SetActive(true);
 
-        // Get player weapon for calculating points
-        if(playerWeapon != null)
+        if (player != null)
         {
-            playerWeapon = player.GetComponent<WeaponManager>();
+            weaponManager = player.GetComponent<WeaponManager>();
+
+            // Get player weapon for calculating points
+            if (weaponManager == null)
+            {
+                Debug.Log("Cant find weaponmanager on player.");
+            }
         }
 
         if(instance == null)
@@ -110,7 +119,10 @@ public class GameManager : MonoBehaviour
             // WIN CONDITION
             float healthPoints = player.GetComponent<PlayerHealth>().GetPlayerHealth();
             float timePoints = currentTime;
-            float ammoPoints = playerWeapon.GetComponent<MagSecPistol>().GetCurrentBulletsLeft() + playerWeapon.GetComponent<PdShotgun>().GetCurrentReserveAmmo();
+            if (weaponManager != null)
+            {
+                ammoPoints = weaponManager.magSecPistolObject.GetComponent<MagSecPistol>().GetTotalAmmoLeft() + weaponManager.pdShotgunObject.GetComponent<PdShotgun>().GetTotalAmmoLeft();
+            }
 
             float totalPoints = (healthPoints * timePoints) + ammoPoints;
 

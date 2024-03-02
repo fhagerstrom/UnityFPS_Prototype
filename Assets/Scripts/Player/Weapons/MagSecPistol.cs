@@ -41,13 +41,8 @@ public class MagSecPistol : BaseWeapon
         base.Reload();
     }
 
-    public int GetCurrentBulletsLeft()
+    public int GetTotalAmmoLeft()
     {
-        return currentBulletsLeft;
-    }
-
-    public int GetCurrentReserveAmmo()
-    {
-        return currentReserveAmmo;
+        return currentBulletsLeft + currentReserveAmmo;
     }
 }

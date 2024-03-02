@@ -5493,7 +5493,7 @@ MonoBehaviour:
   timerText: {fileID: 70144367}
   objectiveText: {fileID: 1661699927}
   pointsText: {fileID: 715773878}
-  playerWeapon: {fileID: 3431867382343325910}
+  weaponManager: {fileID: 3431867382343325910}
   player: {fileID: 513872441}
   playerUI: {fileID: 1431095635}
   winScreen: {fileID: 6440725}
@@ -21707,6 +21707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equippedWeapon: {fileID: 0}
+  magSecPistol: {fileID: 0}
+  pdShotgun: {fileID: 0}
   magSecPistolObject: {fileID: 681682595}
   pdShotgunObject: {fileID: 196923144}
   pickedUpPistol: 0
@@ -22022,6 +22024,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1348661324}
+  - {fileID: 1014073588}
   - {fileID: 3431867382343325851}
   - {fileID: 8250978237370002474}
   - {fileID: 560494484}
@@ -22093,4 +22096,3 @@ SceneRoots:
   - {fileID: 1760614187}
   - {fileID: 1394994318}
   - {fileID: 1865074899}
-  - {fileID: 1014073588}
