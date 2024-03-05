@@ -134,6 +134,7 @@ public class BaseWeapon : MonoBehaviour
     {
         if (startReloadTimer == true)
         {
+            reloadAnimation.Play();
             reloadTimer -= Time.deltaTime;
             if (reloadTimer <= 0)
             { 
@@ -149,7 +150,6 @@ public class BaseWeapon : MonoBehaviour
         // Only enter Reload function if we have reserve ammo left and the weapon has shot at least once
         if (currentReserveAmmo > 0 && (currentBulletsLeft < maxBullets))
         {
-            reloadAnimation.Play();
             canShoot = false;
             startReloadTimer = true;
 
