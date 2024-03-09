@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -117,8 +116,8 @@ public class GameManager : MonoBehaviour
         if(enemiesRemaining <= 0)
         {
             // WIN CONDITION
-            float healthPoints = player.GetComponent<PlayerHealth>().GetPlayerHealth();
-            float timePoints = currentTime;
+            healthPoints = player.GetComponent<PlayerHealth>().GetPlayerHealth();
+            timePoints = currentTime;
             if (weaponManager != null)
             {
                 ammoPoints = weaponManager.magSecPistolObject.GetComponent<MagSecPistol>().GetTotalAmmoLeft() + weaponManager.pdShotgunObject.GetComponent<PdShotgun>().GetTotalAmmoLeft();

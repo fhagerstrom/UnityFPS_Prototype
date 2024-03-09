@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject player;
     private Vector3 lastKnownPos;
-
     public NavMeshAgent Agent { get => agent; }
     public GameObject Player { get => player; }
     public Vector3 LastKnownPos { get => lastKnownPos; set => lastKnownPos = value; }
@@ -29,6 +28,14 @@ public class Enemy : MonoBehaviour
     public float maxHealth = 100f;
     public bool isDead;
 
+    [Header("Audio")]
+    [SerializeField]
+    private AudioClip shootSound;
+    private AudioSource weaponAudioSource;
+
+    public AudioSource WeaponAudio { get => weaponAudioSource; }
+    public AudioClip ShootSound { get => shootSound; }
+
     // Debugging
     [SerializeField]
     private string currentState;
@@ -42,6 +49,11 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initíalize();
         player = GameObject.FindGameObjectWithTag("Player");
+
+        // Audio setup
+        weaponAudioSource = gameObject.AddComponent<AudioSource>();
+        weaponAudioSource.playOnAwake = false;
+        weaponAudioSource.volume = 0.1f;
 
         health = maxHealth;
     }

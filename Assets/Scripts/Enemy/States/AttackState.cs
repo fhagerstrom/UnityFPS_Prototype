@@ -15,7 +15,7 @@ public class AttackState : BaseState
 
     public override void Enter()
     {
-        
+
     }
 
     public override void Exit()
@@ -79,6 +79,8 @@ public class AttackState : BaseState
 
     public void Shoot()
     {
+        enemy.WeaponAudio.PlayOneShot(enemy.ShootSound);
+
         // Get bullet from object pool
         bullet = ObjectPoolManager.instance.GetBullet();
 

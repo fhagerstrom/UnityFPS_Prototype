@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 // Base class weapon, holds all base info on bullets, sounds and reload logic
@@ -39,6 +40,9 @@ public class BaseWeapon : MonoBehaviour
     protected ParticleSystem muzzleFlash;
 
     [SerializeField]
+    protected Material hitMaterial;
+
+    [SerializeField]
     protected Animation reloadAnimation;
 
     private void Start()
@@ -72,6 +76,35 @@ public class BaseWeapon : MonoBehaviour
     public void OnEnemyHit(float damage)
     {
         enemy.TakeDamage(damage);
+
+        // Outline for feedback on hit
+        StartCoroutine(HitOutline(0.25f));
+    }
+
+    IEnumerator HitOutline(float duration)
+    {
+
+        Renderer enemyRenderer = enemy.GetComponentInChildren<Renderer>();
+
+        if (enemyRenderer != null)
+        {
+            // Store original material
+            Material originalMaterial = enemyRenderer.material;
+
+            // Apply hit material
+            enemyRenderer.material = hitMaterial;
+
+            // Wait for hit duration
+            yield return new WaitForSeconds(duration);
+
+            // Revert back to original material
+            enemyRenderer.material = originalMaterial;
+        }
+
+        else
+        {
+            Debug.LogError("Enemy does not have a Renderer component.");
+        }
     }
 
     public virtual void Shoot()
